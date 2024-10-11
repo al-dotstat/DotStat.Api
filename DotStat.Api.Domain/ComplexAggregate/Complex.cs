@@ -18,7 +18,6 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   public double? Area { get; private set; }
   public DateTime? CompletionDate { get; private set; }
   public District District { get; private set; }
-  public Metro Metro { get; private set; }
 
   public IReadOnlyList<ComplexDeveloper> Developers => _developers.ToList().AsReadOnly();
   public IReadOnlyList<ParseId> ParseIds => _parseIds.ToList().AsReadOnly();
@@ -35,7 +34,6 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     double? area,
     DateTime? completionDate,
     District district,
-    Metro metro,
     DateTime createdDateTime,
     DateTime updatedDateTime
   )
@@ -48,7 +46,6 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     Area = area;
     CompletionDate = completionDate;
     District = district;
-    Metro = metro;
     CreatedDateTime = createdDateTime;
     UpdatedDateTime = updatedDateTime;
   }
@@ -61,8 +58,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     string? longitude,
     double? area,
     DateTime? completionDate,
-    District district,
-    Metro metro
+    District district
   )
   {
     return new(
@@ -74,7 +70,6 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
       area,
       completionDate,
       district,
-      metro,
       DateTime.UtcNow,
       DateTime.UtcNow
     );

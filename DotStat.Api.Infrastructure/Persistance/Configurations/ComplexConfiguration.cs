@@ -2,6 +2,7 @@ using DotStat.Api.Domain.ComplexAggregate;
 using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.DeveloperAggregate;
 using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
+using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 using DotStat.Api.Domain.ParseAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +14,6 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
     ConfigureComplexesTable(builder);
     ConfigureComplexDevelopersTable(builder);
     ConfigureDistrictsTable(builder);
-    ConfigureMetrosTable(builder);
   }
 
   private void ConfigureComplexDevelopersTable(EntityTypeBuilder<Complex> builder)
@@ -34,38 +34,6 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
         .HasForeignKey(d => d.DeveloperId)
         .OnDelete(DeleteBehavior.Cascade);
     });
-  }
-
-  private void ConfigureMetrosTable(EntityTypeBuilder<Complex> builder)
-  {
-    builder.OwnsOne(c => c.Metro, cb =>
-    {
-      cb.ToTable("Metros");
-
-      cb.WithOwner().HasForeignKey("MetroId");
-
-      cb.HasKey("Id", "MetroId");
-
-      cb.Property(m => m.Id)
-        .HasColumnName("MetroId")
-        .ValueGeneratedNever()
-        .HasConversion(
-          id => id.Value,
-          value => MetroId.Create(value)
-        );
-
-      cb.Property(m => m.Name)
-        .IsRequired();
-
-      cb.Property(m => m.CreatedDateTime)
-        .IsRequired();
-
-      cb.Property(m => m.UpdatedDateTime)
-        .IsRequired();
-    });
-
-    builder.Metadata.FindNavigation(nameof(Complex.District))!
-      .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 
   private void ConfigureDistrictsTable(EntityTypeBuilder<Complex> builder)
