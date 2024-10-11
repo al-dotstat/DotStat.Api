@@ -42,7 +42,20 @@ public class ComplexesController : BaseController
   }
 
   /// <summary>
-  /// Получить всех здания в ЖК
+  /// Поиск ЖК по фильтрам
+  /// </summary>
+  /// <param name="developersIds">Id застройщиков</param>
+  /// <param name="districtsIds">Id районов</param>
+  /// <param name="search">Строка поиска по названию</param>
+  [ProducesResponseType(typeof(BuildingResponse[]), (int)HttpStatusCode.OK)]
+  [HttpGet("search")]
+  public async Task<IActionResult> SearchComplexes([FromQuery] int[]? developersIds, [FromQuery] int[]? districtsIds, [FromQuery] string? search)
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  /// Получить все здания в ЖК
   /// </summary>
   /// <param name="id">Id ЖК</param>
   [ProducesResponseType(typeof(BuildingResponse[]), (int)HttpStatusCode.OK)]
