@@ -17,7 +17,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
   {
     builder.OwnsMany(u => u.RefreshTokens, sb =>
     {
-      sb.ToTable("RefreshTokens");
+      sb.ToTable("refresh_tokens");
 
       sb.WithOwner().HasForeignKey("UserId");
 
@@ -40,7 +40,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
   private void ConfigureUserTable(EntityTypeBuilder<User> builder)
   {
-    builder.ToTable("Users");
+    builder.ToTable("users");
 
     builder.HasKey(u => u.Id);
 

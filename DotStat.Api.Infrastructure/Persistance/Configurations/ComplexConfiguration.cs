@@ -19,6 +19,8 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
   {
     builder.OwnsMany(c => c.Developers, d =>
     {
+      d.ToTable("complex_developers");
+
       d.WithOwner().HasForeignKey("ComplexId");
 
       d.Property("Id");
@@ -37,7 +39,7 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
 
   private void ConfigureComplexesTable(EntityTypeBuilder<Complex> builder)
   {
-    builder.ToTable("Complexes");
+    builder.ToTable("complexes");
 
     builder.HasKey(c => c.Id);
 

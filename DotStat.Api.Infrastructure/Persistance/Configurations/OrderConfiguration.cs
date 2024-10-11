@@ -21,6 +21,8 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
   {
     builder.OwnsMany(o => o.OrderItems, ob =>
     {
+      ob.ToTable("order_items");
+
       ob.WithOwner().HasForeignKey("OrderId");
 
       ob.Property<int>("Id");
@@ -53,7 +55,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 
   private void ConfigureOrdersTable(EntityTypeBuilder<Order> builder)
   {
-    builder.ToTable("Orders");
+    builder.ToTable("orders");
 
     builder.HasKey(o => o.Id);
 

@@ -14,7 +14,7 @@ public class DistrictConfiguration : IEntityTypeConfiguration<District>
 
   private void ConfigureDistrictsTable(EntityTypeBuilder<District> builder)
   {
-    builder.ToTable("Districts");
+    builder.ToTable("districts");
 
     builder.HasKey(d => d.Id);
 

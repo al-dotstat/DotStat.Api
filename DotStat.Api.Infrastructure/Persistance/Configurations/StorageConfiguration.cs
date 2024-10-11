@@ -24,8 +24,6 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
   {
     builder.OwnsOne(p => p.Declaration, db =>
     {
-      db.ToTable("StorageDeclarations");
-
       db.WithOwner().HasForeignKey("StorageId");
 
       db.HasKey("Id", "StorageId");
@@ -68,7 +66,7 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
   {
     builder.OwnsMany(f => f.ParsingInfos, pb =>
     {
-      pb.ToTable("StorageParsingInfos");
+      pb.ToTable("storage_parsing_infos");
 
       pb.WithOwner().HasForeignKey("StorageId");
 
@@ -106,7 +104,7 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
 
   private void ConfigureStoragesTable(EntityTypeBuilder<Storage> builder)
   {
-    builder.ToTable("Storages");
+    builder.ToTable("storages");
 
     builder.HasKey(s => s.Id);
 

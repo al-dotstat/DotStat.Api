@@ -24,8 +24,6 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
   {
     builder.OwnsOne(p => p.Declaration, db =>
     {
-      db.ToTable("CommercialDeclarations");
-
       db.WithOwner().HasForeignKey("CommercialId");
 
       db.HasKey("Id", "CommercialId");
@@ -68,7 +66,7 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
   {
     builder.OwnsMany(f => f.ParsingInfos, pb =>
     {
-      pb.ToTable("CommercialParsingInfos");
+      pb.ToTable("commercial_parsing_infos");
 
       pb.WithOwner().HasForeignKey("CommercialId");
 
@@ -106,7 +104,7 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
 
   private void ConfigureCommercialsTable(EntityTypeBuilder<Commercial> builder)
   {
-    builder.ToTable("Commercials");
+    builder.ToTable("commercials");
 
     builder.HasKey(c => c.Id);
 

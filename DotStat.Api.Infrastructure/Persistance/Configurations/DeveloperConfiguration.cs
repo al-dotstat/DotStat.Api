@@ -14,7 +14,7 @@ public class DeveloperConfiguration : IEntityTypeConfiguration<Developer>
 
   private void ConfigureDevelopersTable(EntityTypeBuilder<Developer> builder)
   {
-    builder.ToTable("Developers");
+    builder.ToTable("developers");
 
     builder.HasKey(d => d.Id);
 

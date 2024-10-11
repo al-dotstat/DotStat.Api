@@ -24,8 +24,6 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
   {
     builder.OwnsOne(f => f.Declaration, db =>
     {
-      db.ToTable("FlatDeclarations");
-
       db.WithOwner().HasForeignKey("FlatId");
 
       db.HasKey("Id", "FlatId");
@@ -77,7 +75,7 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
   {
     builder.OwnsMany(f => f.ParsingInfos, fb =>
     {
-      fb.ToTable("FlatParsingInfos");
+      fb.ToTable("flat_parsing_infos");
 
       fb.WithOwner().HasForeignKey("FlatId");
 
@@ -115,7 +113,7 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
 
   private void ConfigureFlatsTable(EntityTypeBuilder<Flat> builder)
   {
-    builder.ToTable("Flats");
+    builder.ToTable("flats");
 
     builder.HasKey(f => f.Id);
 

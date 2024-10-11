@@ -24,8 +24,6 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
   {
     builder.OwnsOne(p => p.Declaration, db =>
     {
-      db.ToTable("ParkingDeclarations");
-
       db.WithOwner().HasForeignKey("ParkingId");
 
       db.HasKey("Id", "ParkingId");
@@ -68,7 +66,7 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
   {
     builder.OwnsMany(f => f.ParsingInfos, pb =>
     {
-      pb.ToTable("ParkingParsingInfos");
+      pb.ToTable("parking_parsing_infos");
 
       pb.WithOwner().HasForeignKey("ParkingId");
 
@@ -106,7 +104,7 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
 
   private void ConfigureParkingsTable(EntityTypeBuilder<Parking> builder)
   {
-    builder.ToTable("Parkings");
+    builder.ToTable("parkings");
 
     builder.HasKey(p => p.Id);
 

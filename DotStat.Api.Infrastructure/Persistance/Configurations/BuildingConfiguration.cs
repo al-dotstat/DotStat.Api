@@ -16,7 +16,7 @@ public class BuildingConfiguration : IEntityTypeConfiguration<Building>
 
   private void ConfigureBuildingsTable(EntityTypeBuilder<Building> builder)
   {
-    builder.ToTable("Buildings");
+    builder.ToTable("buildings");
 
     builder.HasKey(b => b.Id);
 
