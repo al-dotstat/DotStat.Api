@@ -12,6 +12,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
 
   public string Name { get; private set; }
   public string NameRu { get; private set; }
+  public string? Description { get; private set; }
   public string? Address { get; private set; }
   public string? Latitude { get; private set; }
   public string? Longitude { get; private set; }
@@ -28,6 +29,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   private Complex(
     string name,
     string nameRu,
+    string? description,
     string? address,
     string? latitude,
     string? longitude,
@@ -40,6 +42,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   {
     Name = name;
     NameRu = nameRu;
+    Description = description;
     Address = address;
     Latitude = latitude;
     Longitude = longitude;
@@ -53,6 +56,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   public static Complex Create(
     string name,
     string nameRu,
+    string? description,
     string? address,
     string? latitude,
     string? longitude,
@@ -64,6 +68,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     return new(
       name,
       nameRu,
+      description,
       address,
       latitude,
       longitude,
