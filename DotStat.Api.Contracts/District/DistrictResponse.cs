@@ -1,6 +1,6 @@
-namespace DotStat.Api.Contracts.Complex;
+namespace DotStat.Api.Contracts.District;
 
-public record MetroResponse(
+public record DistrictResponse(
   int Id,
   string Name,
   DateTime CreatedDateTime,

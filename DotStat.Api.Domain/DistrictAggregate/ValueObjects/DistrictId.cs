@@ -1,10 +1,10 @@
 using DotStat.Api.Domain.Common.Models;
 
-namespace DotStat.Api.Domain.ComplexAggregate.ValueObjects;
+namespace DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 
-public class DistrictId : ValueObject
+public sealed class DistrictId : AggregateRootId<int>
 {
-  public int Value { get; }
+  public override int Value { get; protected set; }
 
   private DistrictId(int value)
   {

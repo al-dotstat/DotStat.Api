@@ -2,8 +2,8 @@ using DotStat.Api.Domain.ComplexAggregate;
 using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.DeveloperAggregate;
 using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
+using DotStat.Api.Domain.DistrictAggregate;
 using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
-using DotStat.Api.Domain.ParseAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,7 +13,6 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
   {
     ConfigureComplexesTable(builder);
     ConfigureComplexDevelopersTable(builder);
-    ConfigureDistrictsTable(builder);
   }
 
   private void ConfigureComplexDevelopersTable(EntityTypeBuilder<Complex> builder)
@@ -34,38 +33,6 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
         .HasForeignKey(d => d.DeveloperId)
         .OnDelete(DeleteBehavior.Cascade);
     });
-  }
-
-  private void ConfigureDistrictsTable(EntityTypeBuilder<Complex> builder)
-  {
-    builder.OwnsOne(c => c.District, cb =>
-    {
-      cb.ToTable("Districts");
-
-      cb.WithOwner().HasForeignKey("ComplexId");
-
-      cb.HasKey("Id", "ComplexId");
-
-      cb.Property(d => d.Id)
-        .HasColumnName("DistrictId")
-        .ValueGeneratedNever()
-        .HasConversion(
-          id => id.Value,
-          value => DistrictId.Create(value)
-        );
-
-      cb.Property(d => d.Name)
-        .IsRequired();
-
-      cb.Property(d => d.CreatedDateTime)
-        .IsRequired();
-
-      cb.Property(d => d.UpdatedDateTime)
-        .IsRequired();
-    });
-
-    builder.Metadata.FindNavigation(nameof(Complex.District))!
-      .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 
   private void ConfigureComplexesTable(EntityTypeBuilder<Complex> builder)
@@ -89,5 +56,14 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
 
     builder.Property(c => c.UpdatedDateTime)
       .IsRequired();
+
+    builder.Property(c => c.DistrictId)
+        .HasConversion(id => id.Value, value => DistrictId.Create(value))
+        .ValueGeneratedNever();
+
+    builder.HasOne<District>()
+      .WithMany()
+      .HasForeignKey(c => c.DistrictId)
+      .OnDelete(DeleteBehavior.NoAction);
   }
 }

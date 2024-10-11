@@ -9,8 +9,7 @@ public record ComplexResponse(
   string? Longitude,
   double? Area,
   DateTime? CompletionDate,
-  DistrictResponse District,
-  MetroResponse Metro,
+  int DistrictId,
   ComplexDeveloperResponse[] Developers,
   DateTime CreatedDateTime,
   DateTime UpdatedDateTime

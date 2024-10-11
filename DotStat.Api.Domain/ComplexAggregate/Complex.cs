@@ -1,6 +1,6 @@
 using DotStat.Api.Domain.Common.Models;
-using DotStat.Api.Domain.ComplexAggregate.Entities;
 using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
+using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 using DotStat.Api.Domain.ParseAggregate.ValueObjects;
 
 namespace DotStat.Api.Domain.ComplexAggregate;
@@ -17,7 +17,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   public string? Longitude { get; private set; }
   public double? Area { get; private set; }
   public DateTime? CompletionDate { get; private set; }
-  public District District { get; private set; }
+  public DistrictId DistrictId { get; private set; }
 
   public IReadOnlyList<ComplexDeveloper> Developers => _developers.ToList().AsReadOnly();
   public IReadOnlyList<ParseId> ParseIds => _parseIds.ToList().AsReadOnly();
@@ -33,7 +33,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     string? longitude,
     double? area,
     DateTime? completionDate,
-    District district,
+    DistrictId districtId,
     DateTime createdDateTime,
     DateTime updatedDateTime
   )
@@ -45,7 +45,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     Longitude = longitude;
     Area = area;
     CompletionDate = completionDate;
-    District = district;
+    DistrictId = districtId;
     CreatedDateTime = createdDateTime;
     UpdatedDateTime = updatedDateTime;
   }
@@ -58,7 +58,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     string? longitude,
     double? area,
     DateTime? completionDate,
-    District district
+    DistrictId districtId
   )
   {
     return new(
@@ -69,7 +69,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
       longitude,
       area,
       completionDate,
-      district,
+      districtId,
       DateTime.UtcNow,
       DateTime.UtcNow
     );

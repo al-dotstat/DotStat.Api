@@ -1,9 +1,9 @@
 using DotStat.Api.Domain.Common.Models;
-using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
+using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 
-namespace DotStat.Api.Domain.ComplexAggregate.Entities;
+namespace DotStat.Api.Domain.DistrictAggregate;
 
-public class District : Entity<DistrictId>
+public sealed class District : AggregateRoot<DistrictId, int>
 {
   public string Name { get; private set; }
 
@@ -19,7 +19,7 @@ public class District : Entity<DistrictId>
 
   public static District Create(string name)
   {
-    return new(name, DateTime.UtcNow, DateTime.UtcNow);
+    return new District(name, DateTime.UtcNow, DateTime.UtcNow);
   }
 
 #pragma warning disable CS8618
