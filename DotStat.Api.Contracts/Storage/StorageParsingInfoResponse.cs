@@ -1,8 +1,8 @@
 using DotStat.Api.Domain.Common.Enums;
 
-namespace DotStat.Api.Contracts.Parking;
+namespace DotStat.Api.Contracts.Storage;
 
-public record ParkingParsingInfoResponse(
+public record StorageParsingInfoResponse(
   int Id,
   int ParseId,
   string? Number,

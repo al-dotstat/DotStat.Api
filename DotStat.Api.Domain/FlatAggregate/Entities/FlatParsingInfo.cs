@@ -1,3 +1,4 @@
+using DotStat.Api.Domain.Common.Enums;
 using DotStat.Api.Domain.Common.Models;
 using DotStat.Api.Domain.FlatAggregate.ValueObjects;
 using DotStat.Api.Domain.ParseAggregate.ValueObjects;
@@ -16,6 +17,7 @@ public class FlatParsingInfo : Entity<FlatParsingInfoId>
   public string? AdditionalJsonInfo { get; private set; }
   public double Price { get; private set; }
   public DateTime Date { get; private set; }
+  public Status Status { get; private set; }
 
   public DateTime CreatedDateTime { get; private set; }
   public DateTime UpdatedDateTime { get; private set; }
@@ -31,6 +33,7 @@ public class FlatParsingInfo : Entity<FlatParsingInfoId>
     string? additionalJsonInfo,
     double price,
     DateTime date,
+    Status status,
     DateTime createdDateTime,
     DateTime updatedDateTime
   )
@@ -45,6 +48,7 @@ public class FlatParsingInfo : Entity<FlatParsingInfoId>
     AdditionalJsonInfo = additionalJsonInfo;
     Price = price;
     Date = date;
+    Status = status;
     CreatedDateTime = createdDateTime;
     UpdatedDateTime = updatedDateTime;
   }
@@ -59,7 +63,8 @@ public class FlatParsingInfo : Entity<FlatParsingInfoId>
     string? building,
     string? additionalJsonInfo,
     double price,
-    DateTime date
+    DateTime date,
+    Status status
   )
   {
     return new(
@@ -73,6 +78,7 @@ public class FlatParsingInfo : Entity<FlatParsingInfoId>
       additionalJsonInfo,
       price,
       date,
+      status,
       DateTime.UtcNow,
       DateTime.UtcNow
     );

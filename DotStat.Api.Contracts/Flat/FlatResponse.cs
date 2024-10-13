@@ -1,3 +1,5 @@
+using DotStat.Api.Domain.Common.Enums;
+
 namespace DotStat.Api.Contracts.Flat;
 
 public record FlatResponse(
@@ -10,6 +12,7 @@ public record FlatResponse(
   string? DeveloperUnique,
   string? AdditionalJsonInfo,
   FlatDeclarationResponse? Declaration,
+  Status CurrentStatus,
   DateTime CreatedDateTime,
   DateTime UpdatedDateTime
 );

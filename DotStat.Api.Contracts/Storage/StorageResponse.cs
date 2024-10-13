@@ -1,11 +1,11 @@
 using DotStat.Api.Domain.Common.Enums;
 
-namespace DotStat.Api.Contracts.Commercial;
+namespace DotStat.Api.Contracts.Storage;
 
-public record CommercialResponse(
+public record StorageResponse(
   int Id,
   string Title,
-  CommercialDeclarationResponse? Declaration,
+  StorageDeclarationResponse? Declaration,
   int BuildingId,
   int DeveloperId,
   string? Layout,

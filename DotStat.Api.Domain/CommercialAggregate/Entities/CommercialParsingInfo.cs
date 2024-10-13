@@ -1,4 +1,5 @@
 using DotStat.Api.Domain.CommercialAggregate.ValueObjects;
+using DotStat.Api.Domain.Common.Enums;
 using DotStat.Api.Domain.Common.Models;
 using DotStat.Api.Domain.ParseAggregate.ValueObjects;
 
@@ -14,6 +15,7 @@ public class CommercialParsingInfo : Entity<CommercialParsingInfoId>
   public string? AdditionalJsonInfo { get; private set; }
   public double Price { get; private set; }
   public DateTime Date { get; private set; }
+  public Status Status { get; private set; }
 
   public DateTime CreatedDateTime { get; private set; }
   public DateTime UpdatedDateTime { get; private set; }
@@ -27,6 +29,7 @@ public class CommercialParsingInfo : Entity<CommercialParsingInfoId>
     string? additionalJsonInfo,
     double price,
     DateTime date,
+    Status status,
     DateTime createdDateTime,
     DateTime updatedDateTime
   )
@@ -39,6 +42,7 @@ public class CommercialParsingInfo : Entity<CommercialParsingInfoId>
     AdditionalJsonInfo = additionalJsonInfo;
     Price = price;
     Date = date;
+    Status = status;
     CreatedDateTime = createdDateTime;
     UpdatedDateTime = updatedDateTime;
   }
@@ -51,7 +55,8 @@ public class CommercialParsingInfo : Entity<CommercialParsingInfoId>
     string? building,
     string? additionalJsonInfo,
     double price,
-    DateTime date
+    DateTime date,
+    Status status
   )
   {
     return new(
@@ -63,6 +68,7 @@ public class CommercialParsingInfo : Entity<CommercialParsingInfoId>
       additionalJsonInfo,
       price,
       date,
+      status,
       DateTime.UtcNow,
       DateTime.UtcNow
     );

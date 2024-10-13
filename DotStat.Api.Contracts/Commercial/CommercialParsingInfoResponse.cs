@@ -1,3 +1,5 @@
+using DotStat.Api.Domain.Common.Enums;
+
 namespace DotStat.Api.Contracts.Commercial;
 
 public record CommercialParsingInfoResponse(
@@ -10,6 +12,7 @@ public record CommercialParsingInfoResponse(
   string? AdditionalJsonInfo,
   double Price,
   DateTime Date,
+  Status Status,
   DateTime CreatedDateTime,
   DateTime UpdatedDateTime
 );

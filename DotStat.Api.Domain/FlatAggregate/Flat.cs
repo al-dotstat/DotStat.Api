@@ -1,4 +1,5 @@
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
+using DotStat.Api.Domain.Common.Enums;
 using DotStat.Api.Domain.Common.Models;
 using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
 using DotStat.Api.Domain.FlatAggregate.Entities;
@@ -18,6 +19,7 @@ public sealed class Flat : AggregateRoot<FlatId, int>
   public bool? IsEuro { get; private set; }
   public string? DeveloperUnique { get; private set; }
   public string? AdditionalJsonInfo { get; private set; }
+  public Status CurrentStatus { get; private set; }
 
   public IReadOnlyList<FlatParsingInfo> ParsingInfos => _parsingInfos.ToList().AsReadOnly();
 
@@ -33,6 +35,7 @@ public sealed class Flat : AggregateRoot<FlatId, int>
     bool? isEuro,
     string? developerUnique,
     string? additionalJsonInfo,
+    Status currentStatus,
     DateTime createdDateTime,
     DateTime updatedDateTime
   )
@@ -45,6 +48,7 @@ public sealed class Flat : AggregateRoot<FlatId, int>
     IsEuro = isEuro;
     DeveloperUnique = developerUnique;
     AdditionalJsonInfo = additionalJsonInfo;
+    CurrentStatus = currentStatus;
     CreatedDateTime = createdDateTime;
     UpdatedDateTime = updatedDateTime;
   }
@@ -57,7 +61,8 @@ public sealed class Flat : AggregateRoot<FlatId, int>
     string? layout,
     bool? isEuro,
     string? developerUnique,
-    string? additionalJsonInfo
+    string? additionalJsonInfo,
+    Status currentStatus
   )
   {
     return new(
@@ -69,6 +74,7 @@ public sealed class Flat : AggregateRoot<FlatId, int>
       isEuro,
       developerUnique,
       additionalJsonInfo,
+      currentStatus,
       DateTime.UtcNow,
       DateTime.UtcNow
     );
@@ -77,12 +83,15 @@ public sealed class Flat : AggregateRoot<FlatId, int>
   public void AddParsingInfo(FlatParsingInfo parsingInfo)
   {
     _parsingInfos.Add(parsingInfo);
+    CurrentStatus = parsingInfo.Status;
     UpdatedDateTime = DateTime.UtcNow;
   }
 
   public void RemoveParsingInfo(FlatParsingInfo parsingInfo)
   {
     _parsingInfos.Remove(parsingInfo);
+    var lastParsingInfo = _parsingInfos.MaxBy(pi => pi.Date);
+    CurrentStatus = lastParsingInfo?.Status ?? Status.NoInfo;
     UpdatedDateTime = DateTime.UtcNow;
   }
 

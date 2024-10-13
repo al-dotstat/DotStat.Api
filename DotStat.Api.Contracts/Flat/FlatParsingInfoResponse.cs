@@ -1,3 +1,5 @@
+using DotStat.Api.Domain.Common.Enums;
+
 namespace DotStat.Api.Contracts.Flat;
 
 public record FlatParsingInfoResponse(
@@ -12,6 +14,7 @@ public record FlatParsingInfoResponse(
   string? AdditionalJsonInfo,
   double Price,
   DateTime Date,
+  Status Status,
   DateTime CreatedDateTime,
   DateTime UpdatedDateTime
 );
