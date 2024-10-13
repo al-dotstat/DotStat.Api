@@ -1,5 +1,7 @@
+using DotStat.Api.Application.Common.Interfaces.Persistance;
 using DotStat.Api.Infrastructure.Configuration;
 using DotStat.Api.Infrastructure.Persistance;
+using DotStat.Api.Infrastructure.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +33,8 @@ public static class DependencyInjection
         o => o.MigrationsHistoryTable(tableName: "__DotStatApiMigrationHistory", schema: "dotstatapi")
       )
     );
+
+    services.AddScoped<IDeveloperRepository, DeveloperRepository>();
 
     return services;
   }

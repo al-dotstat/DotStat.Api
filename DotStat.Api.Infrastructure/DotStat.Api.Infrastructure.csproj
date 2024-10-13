@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotStat.Api.Domain\DotStat.Api.Domain.csproj" />
+    <ProjectReference Include="..\DotStat.Api.Application\DotStat.Api.Application.csproj" />
   </ItemGroup>
 
 </Project>

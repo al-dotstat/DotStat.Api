@@ -1,3 +1,4 @@
+using DotStat.Api.Application;
 using DotStat.Api.Infrastructure;
 using DotStat.Api.Rest;
 
@@ -5,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
   .AddPresentation()
+  .AddApplication()
   .AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHealthChecks();

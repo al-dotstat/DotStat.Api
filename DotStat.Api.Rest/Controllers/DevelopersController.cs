@@ -1,6 +1,9 @@
 using System.Net;
+using DotStat.Api.Application.Developing.Queries.AllDevelopersQuery;
+using DotStat.Api.Application.Developing.Queries.DeveloperQuery;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.Developer;
+using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +29,13 @@ public class DevelopersController : BaseController
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetDeveloper(int id)
   {
-    throw new NotImplementedException();
+    var query = new DeveloperQuery(DeveloperId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<DeveloperResponse>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -37,7 +46,13 @@ public class DevelopersController : BaseController
   [HttpGet]
   public async Task<IActionResult> GetAllDevelopers()
   {
-    throw new NotImplementedException();
+    var query = new AllDevelopersQuery();
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<DeveloperResponse[]>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -45,7 +60,7 @@ public class DevelopersController : BaseController
   /// </summary>
   /// <param name="id">Id застройщика</param>
   [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
-  [HttpGet("{id:int}")]
+  [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDeveloperComplexes(int id)
   {
     throw new NotImplementedException();
