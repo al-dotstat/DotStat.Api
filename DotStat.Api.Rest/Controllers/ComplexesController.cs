@@ -33,6 +33,7 @@ public class ComplexesController : BaseController
   /// </summary>
   /// <param name="id">Id ЖК</param>
   [ProducesResponseType(typeof(ComplexResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetComplex(int id)
   {
@@ -49,6 +50,7 @@ public class ComplexesController : BaseController
   /// Получить все ЖК
   /// </summary>
   [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> GetAllComplexes()
   {
@@ -68,6 +70,7 @@ public class ComplexesController : BaseController
   /// <param name="districtsIds">Id районов</param>
   /// <param name="search">Строка поиска по названию</param>
   [ProducesResponseType(typeof(BuildingResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("search")]
   public async Task<IActionResult> SearchComplexes([FromQuery] int[]? developersIds, [FromQuery] int[]? districtsIds, [FromQuery] string? search)
   {
@@ -92,6 +95,7 @@ public class ComplexesController : BaseController
   /// </summary>
   /// <param name="id">Id ЖК</param>
   [ProducesResponseType(typeof(BuildingResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}/buildings")]
   public async Task<IActionResult> GetComplexBuildings(int id)
   {
@@ -109,6 +113,7 @@ public class ComplexesController : BaseController
   /// </summary>
   /// <param name="id">Id ЖК</param>
   [ProducesResponseType(typeof(DeveloperResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}/developers")]
   public async Task<IActionResult> GetComplexDevelopers(int id)
   {
@@ -126,6 +131,7 @@ public class ComplexesController : BaseController
   /// </summary>
   /// <param name="id">Id ЖК</param>
   [ProducesResponseType(typeof(ParseResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}/parsed")]
   public async Task<IActionResult> GetComplexParsedInfo(int id)
   {

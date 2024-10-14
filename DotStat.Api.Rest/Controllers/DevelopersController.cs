@@ -26,6 +26,7 @@ public class DevelopersController : BaseController
   /// </summary>
   /// <param name="id">Id застройщика</param>
   [ProducesResponseType(typeof(DeveloperResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetDeveloper(int id)
   {
@@ -41,8 +42,8 @@ public class DevelopersController : BaseController
   /// <summary>
   /// Получить всех застройщиков
   /// </summary>
-  /// <param name="id">Id застройщика</param>
   [ProducesResponseType(typeof(DeveloperResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> GetAllDevelopers()
   {
@@ -60,6 +61,7 @@ public class DevelopersController : BaseController
   /// </summary>
   /// <param name="id">Id застройщика</param>
   [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDeveloperComplexes(int id)
   {

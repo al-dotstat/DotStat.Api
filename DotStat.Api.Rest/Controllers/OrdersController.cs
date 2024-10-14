@@ -29,6 +29,7 @@ public class OrdersController : BaseController
   /// </summary>
   /// <param name="id">Id заказа</param>
   [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetOrder(int id)
   {
@@ -45,6 +46,7 @@ public class OrdersController : BaseController
   /// Получить историю заказов авторизованного пользователя
   /// </summary>
   [ProducesResponseType(typeof(OrderResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("history")]
   public async Task<IActionResult> GetOrdersHistory()
   {
@@ -71,6 +73,7 @@ public class OrdersController : BaseController
   /// Создать заказ
   /// </summary>
   [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpPost]
   public async Task<IActionResult> CreateOrder([FromBody] OrderRequest request)
   {

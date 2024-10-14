@@ -31,6 +31,7 @@ public class UsersController : BaseController
   /// </summary>
   /// <param name="id">Id пользователя</param>
   [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetUser(int id)
   {
@@ -47,6 +48,7 @@ public class UsersController : BaseController
   /// Получить авторизованного пользователя
   /// </summary>
   [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("me")]
   public async Task<IActionResult> GetAuthUser()
   {
@@ -72,8 +74,10 @@ public class UsersController : BaseController
   /// <summary>
   /// Зарегистрировать пользователя
   /// </summary>
+  [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpPost("register")]
-  public async Task<IActionResult> Register(RegisterRequest request)
+  public async Task<IActionResult> Register([FromBody] RegisterRequest request)
   {
     var command = _mapper.Map<RegisterCommand>(request);
     var userResult = await _mediator.Send(command);
@@ -87,8 +91,10 @@ public class UsersController : BaseController
   /// <summary>
   /// Авторизовать пользователя
   /// </summary>
+  [ProducesResponseType(typeof(AuthenticationResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpPost("login")]
-  public async Task<IActionResult> Login(LoginRequest request)
+  public async Task<IActionResult> Login([FromBody] LoginRequest request)
   {
     var command = _mapper.Map<LoginCommand>(request);
     var authResult = await _mediator.Send(command);
@@ -102,8 +108,10 @@ public class UsersController : BaseController
   /// <summary>
   /// Обновить JWT по Refresh Token
   /// </summary>
+  [ProducesResponseType(typeof(RefreshResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpPost("refresh")]
-  public async Task<IActionResult> Refresh(RefreshRequest request)
+  public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
   {
     var command = _mapper.Map<RefreshCommand>(request);
     var authResult = await _mediator.Send(command);
@@ -117,8 +125,10 @@ public class UsersController : BaseController
   /// <summary>
   /// Выход пользователя из системы
   /// </summary>
+  [ProducesResponseType((int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpPost("logout")]
-  public async Task<IActionResult> Logout(RefreshRequest request)
+  public async Task<IActionResult> Logout([FromBody] RefreshRequest request)
   {
     var idClaim = HttpContext.User.Claims.FirstOrDefault(c =>
       c.Type == JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub]);
@@ -143,6 +153,8 @@ public class UsersController : BaseController
   /// <summary>
   /// Изменить пароль пользователя
   /// </summary>
+  [ProducesResponseType(typeof(AuthenticationResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpPut("password")]
   public async Task<IActionResult> ChangePassword([FromBody] PasswordRequest request)
   {

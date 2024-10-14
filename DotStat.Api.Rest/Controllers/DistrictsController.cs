@@ -26,6 +26,7 @@ public class DistrictsController : BaseController
   /// </summary>
   /// <param name="id">Id района</param>
   [ProducesResponseType(typeof(DistrictResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetDistrict(int id)
   {
@@ -42,6 +43,7 @@ public class DistrictsController : BaseController
   /// Получить все районы
   /// </summary>
   [ProducesResponseType(typeof(DistrictResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> GetAllDistricts()
   {
@@ -59,6 +61,7 @@ public class DistrictsController : BaseController
   /// </summary>
   /// <param name="id">Id района</param>
   [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDistrictComplexes(int id)
   {

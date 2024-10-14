@@ -24,6 +24,7 @@ public class BuildingsController : BaseController
   /// </summary>
   /// <param name="id">Id строения</param>
   [ProducesResponseType(typeof(BuildingResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetBuilding(int id)
   {

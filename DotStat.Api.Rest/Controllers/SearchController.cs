@@ -23,6 +23,7 @@ public class SearchController : BaseController
   /// </summary>
   /// <param name="search">Строка поиска</param>
   [ProducesResponseType(typeof(SearchResponse[]), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> SearchComplexesAndDevelopers([FromQuery] string search)
   {
