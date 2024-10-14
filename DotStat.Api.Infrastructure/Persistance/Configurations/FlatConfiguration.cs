@@ -24,6 +24,8 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
   {
     builder.OwnsOne(f => f.Declaration, db =>
     {
+      db.ToTable("flat_declaration");
+
       db.WithOwner().HasForeignKey("FlatId");
 
       db.HasKey("Id", "FlatId");

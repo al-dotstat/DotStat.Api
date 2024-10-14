@@ -24,6 +24,8 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
   {
     builder.OwnsOne(p => p.Declaration, db =>
     {
+      db.ToTable("storage_declaration");
+
       db.WithOwner().HasForeignKey("StorageId");
 
       db.HasKey("Id", "StorageId");

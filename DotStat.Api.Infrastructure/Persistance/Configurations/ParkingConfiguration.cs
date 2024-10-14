@@ -24,6 +24,8 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
   {
     builder.OwnsOne(p => p.Declaration, db =>
     {
+      db.ToTable("parking_declaration");
+
       db.WithOwner().HasForeignKey("ParkingId");
 
       db.HasKey("Id", "ParkingId");

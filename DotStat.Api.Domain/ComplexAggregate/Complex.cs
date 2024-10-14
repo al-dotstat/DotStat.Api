@@ -8,7 +8,6 @@ namespace DotStat.Api.Domain.ComplexAggregate;
 public sealed class Complex : AggregateRoot<ComplexId, int>
 {
   private readonly List<ComplexDeveloper> _developers = [];
-  private readonly List<ParseId> _parseIds = [];
 
   public string Name { get; private set; }
   public string NameRu { get; private set; }
@@ -21,7 +20,6 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   public DistrictId DistrictId { get; private set; }
 
   public IReadOnlyList<ComplexDeveloper> Developers => _developers.ToList().AsReadOnly();
-  public IReadOnlyList<ParseId> ParseIds => _parseIds.ToList().AsReadOnly();
 
   public DateTime CreatedDateTime { get; private set; }
   public DateTime UpdatedDateTime { get; private set; }
@@ -84,18 +82,6 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   {
     _developers.RemoveAll(id => true);
     _developers.AddRange(developers);
-    UpdatedDateTime = DateTime.UtcNow;
-  }
-
-  public void AddParse(ParseId parseId)
-  {
-    _parseIds.Add(parseId);
-    UpdatedDateTime = DateTime.UtcNow;
-  }
-
-  public void RemoveParse(ParseId parseId)
-  {
-    _parseIds.Remove(parseId);
     UpdatedDateTime = DateTime.UtcNow;
   }
 

@@ -44,7 +44,7 @@ public class DotStatApiDbContext : DbContext
       .Ignore<List<IDomainEvent>>()
       .ApplyConfigurationsFromAssembly(typeof(DotStatApiDbContext).Assembly);
 
-    modelBuilder.HasDefaultSchema("points");
+    modelBuilder.HasDefaultSchema("api");
   }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

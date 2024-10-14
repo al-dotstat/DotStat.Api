@@ -4,6 +4,7 @@ using DotStat.Api.Application.Common.Interfaces.Persistance;
 using DotStat.Api.Infrastructure.Auth;
 using DotStat.Api.Infrastructure.Configuration;
 using DotStat.Api.Infrastructure.Persistance;
+using DotStat.Api.Infrastructure.Persistance.Interceptors;
 using DotStat.Api.Infrastructure.Persistance.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,7 @@ public static class DependencyInjection
       )
     );
 
+    services.AddScoped<PublishDomainEventsInterceptor>();
     services.AddScoped<IDeveloperRepository, DeveloperRepository>();
     services.AddScoped<IComplexRepository, ComplexRepository>();
     services.AddScoped<IBuildingRepository, BuildingRepository>();

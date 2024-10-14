@@ -24,6 +24,8 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
   {
     builder.OwnsOne(p => p.Declaration, db =>
     {
+      db.ToTable("commercial_declaration");
+
       db.WithOwner().HasForeignKey("CommercialId");
 
       db.HasKey("Id", "CommercialId");
