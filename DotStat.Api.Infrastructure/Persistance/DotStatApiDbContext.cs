@@ -7,6 +7,7 @@ using DotStat.Api.Domain.DistrictAggregate;
 using DotStat.Api.Domain.FlatAggregate;
 using DotStat.Api.Domain.OrderAggregate;
 using DotStat.Api.Domain.ParkingAggregate;
+using DotStat.Api.Domain.ParseAggregate;
 using DotStat.Api.Domain.StorageAggregate;
 using DotStat.Api.Domain.UserAggregate;
 using DotStat.Api.Infrastructure.Persistance.Interceptors;
@@ -33,6 +34,7 @@ public class DotStatApiDbContext : DbContext
   public DbSet<Commercial> Commercials { get; set; } = null!;
   public DbSet<Order> Orders { get; set; } = null!;
   public DbSet<District> Districts { get; set; } = null!;
+  public DbSet<Parse> Parses { get; set; } = null!;
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

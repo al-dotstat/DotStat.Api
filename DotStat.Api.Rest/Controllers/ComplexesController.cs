@@ -3,6 +3,7 @@ using DotStat.Api.Application.Developing.Queries.BuildingQueries;
 using DotStat.Api.Application.Developing.Queries.ComplexQueries;
 using DotStat.Api.Application.Developing.Queries.DeveloperQueries;
 using DotStat.Api.Application.Developing.Queries.SearchQueries;
+using DotStat.Api.Application.Parsing.Queries.ParsedQueries;
 using DotStat.Api.Contracts.Building;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.Developer;
@@ -128,6 +129,12 @@ public class ComplexesController : BaseController
   [HttpGet("{id:int}/parsed")]
   public async Task<IActionResult> GetComplexParsedInfo(int id)
   {
-    throw new NotImplementedException();
+    var query = new ComplexParsedQuery(ComplexId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ParseResponse[]>(res)),
+      Problem
+    );
   }
 }
