@@ -1,5 +1,7 @@
 using System.Net;
+using DotStat.Api.Application.Developing.Queries.BuildingQueries;
 using DotStat.Api.Contracts.Building;
+using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +27,12 @@ public class BuildingsController : BaseController
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetBuilding(int id)
   {
-    throw new NotImplementedException();
+    var query = new BuildingQuery(BuildingId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<BuildingResponse[]>(res)),
+      Problem
+    );
   }
 }

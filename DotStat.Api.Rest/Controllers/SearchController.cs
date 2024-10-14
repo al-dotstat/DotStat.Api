@@ -1,4 +1,5 @@
 using System.Net;
+using DotStat.Api.Application.Developing.Queries.SearchQueries;
 using DotStat.Api.Contracts.Common;
 using MapsterMapper;
 using MediatR;
@@ -25,6 +26,12 @@ public class SearchController : BaseController
   [HttpGet]
   public async Task<IActionResult> SearchComplexesAndDevelopers([FromQuery] string search)
   {
-    throw new NotImplementedException();
+    var query = new SearchQuery(search);
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<SearchResponse>(res)),
+      Problem
+    );
   }
 }

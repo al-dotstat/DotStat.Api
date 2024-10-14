@@ -3,7 +3,7 @@ using DotStat.Api.Application.Developing.Results;
 using ErrorOr;
 using MediatR;
 
-namespace DotStat.Api.Application.Developing.Queries.AllDevelopersQuery;
+namespace DotStat.Api.Application.Developing.Queries.DeveloperQueries;
 
 public class AllDevelopersQueryHandler(IDeveloperRepository developerRepository) : IRequestHandler<AllDevelopersQuery, ErrorOr<DevelopersResult>>
 {

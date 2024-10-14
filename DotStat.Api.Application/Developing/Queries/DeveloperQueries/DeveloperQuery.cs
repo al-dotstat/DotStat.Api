@@ -3,7 +3,7 @@ using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
 
-namespace DotStat.Api.Application.Developing.Queries.DeveloperQuery;
+namespace DotStat.Api.Application.Developing.Queries.DeveloperQueries;
 
 public record DeveloperQuery(
   DeveloperId Id

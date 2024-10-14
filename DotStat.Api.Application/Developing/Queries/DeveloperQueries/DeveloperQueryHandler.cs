@@ -5,7 +5,7 @@ using DotStat.Api.Domain.DeveloperAggregate;
 using ErrorOr;
 using MediatR;
 
-namespace DotStat.Api.Application.Developing.Queries.DeveloperQuery;
+namespace DotStat.Api.Application.Developing.Queries.DeveloperQueries;
 
 public class DeveloperQueryHandler(IDeveloperRepository developerRepository) : IRequestHandler<DeveloperQuery, ErrorOr<DeveloperResult>>
 {

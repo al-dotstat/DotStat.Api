@@ -1,6 +1,6 @@
 using System.Net;
-using DotStat.Api.Application.Developing.Queries.AllDevelopersQuery;
-using DotStat.Api.Application.Developing.Queries.DeveloperQuery;
+using DotStat.Api.Application.Developing.Queries.ComplexQueries;
+using DotStat.Api.Application.Developing.Queries.DeveloperQueries;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.Developer;
 using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
@@ -63,6 +63,12 @@ public class DevelopersController : BaseController
   [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDeveloperComplexes(int id)
   {
-    throw new NotImplementedException();
+    var query = new DeveloperComplexesQuery(DeveloperId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      Problem
+    );
   }
 }

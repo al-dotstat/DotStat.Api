@@ -1,6 +1,9 @@
 using System.Net;
+using DotStat.Api.Application.Developing.Queries.ComplexQueries;
+using DotStat.Api.Application.Developing.Queries.DistrictQueries;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.District;
+using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +29,13 @@ public class DistrictsController : BaseController
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetDistrict(int id)
   {
-    throw new NotImplementedException();
+    var query = new DistrictQuery(DistrictId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<DistrictResponse>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -36,7 +45,13 @@ public class DistrictsController : BaseController
   [HttpGet]
   public async Task<IActionResult> GetAllDistricts()
   {
-    throw new NotImplementedException();
+    var query = new DistrictsQuery();
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<DistrictResponse[]>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -47,6 +62,12 @@ public class DistrictsController : BaseController
   [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDistrictComplexes(int id)
   {
-    throw new NotImplementedException();
+    var query = new DistrictComplexesQuery(DistrictId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      Problem
+    );
   }
 }

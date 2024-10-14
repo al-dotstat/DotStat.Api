@@ -1,8 +1,15 @@
 using System.Net;
+using DotStat.Api.Application.Developing.Queries.BuildingQueries;
+using DotStat.Api.Application.Developing.Queries.ComplexQueries;
+using DotStat.Api.Application.Developing.Queries.DeveloperQueries;
+using DotStat.Api.Application.Developing.Queries.SearchQueries;
 using DotStat.Api.Contracts.Building;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.Developer;
 using DotStat.Api.Contracts.Parse;
+using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
+using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
+using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +35,13 @@ public class ComplexesController : BaseController
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetComplex(int id)
   {
-    throw new NotImplementedException();
+    var query = new ComplexQuery(ComplexId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ComplexResponse>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -38,7 +51,13 @@ public class ComplexesController : BaseController
   [HttpGet]
   public async Task<IActionResult> GetAllComplexes()
   {
-    throw new NotImplementedException();
+    var query = new AllComplexesQuery();
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -51,7 +70,20 @@ public class ComplexesController : BaseController
   [HttpGet("search")]
   public async Task<IActionResult> SearchComplexes([FromQuery] int[]? developersIds, [FromQuery] int[]? districtsIds, [FromQuery] string? search)
   {
-    throw new NotImplementedException();
+    var developersIdsCasted = (developersIds ?? []).Select(x => DeveloperId.Create(x));
+    var districtsIdsCasted = (districtsIds ?? []).Select(x => DistrictId.Create(x));
+
+    var query = new ComplexesByFiltersQuery(
+      developersIdsCasted,
+      districtsIdsCasted,
+      search ?? ""
+    );
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -62,7 +94,13 @@ public class ComplexesController : BaseController
   [HttpGet("{id:int}/buildings")]
   public async Task<IActionResult> GetComplexBuildings(int id)
   {
-    throw new NotImplementedException();
+    var query = new ComplexBuildingsQuery(ComplexId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<BuildingResponse[]>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -73,7 +111,13 @@ public class ComplexesController : BaseController
   [HttpGet("{id:int}/developers")]
   public async Task<IActionResult> GetComplexDevelopers(int id)
   {
-    throw new NotImplementedException();
+    var query = new ComplexDevelopersQuery(ComplexId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<DeveloperResponse[]>(res)),
+      Problem
+    );
   }
 
   /// <summary>
