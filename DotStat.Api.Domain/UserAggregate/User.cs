@@ -8,6 +8,8 @@ namespace DotStat.Api.Domain.UserAggregate;
 public sealed class User : AggregateRoot<UserId, int>
 {
   private readonly List<RefreshToken> _refreshTokens = [];
+  private readonly List<UserRole> _roles = [];
+  private readonly List<UserClaim> _claims = [];
 
   public string FirstName { get; private set; }
   public string? LastName { get; private set; }
@@ -16,6 +18,8 @@ public sealed class User : AggregateRoot<UserId, int>
   public string PasswordHash { get; private set; }
 
   public IReadOnlyList<RefreshToken> RefreshTokens => _refreshTokens.ToList().AsReadOnly();
+  public IReadOnlyList<UserRole> Roles => _roles.ToList().AsReadOnly();
+  public IReadOnlyList<UserClaim> Claims => _claims.ToList().AsReadOnly();
 
   public DateTime CreatedDateTime { get; private set; }
   public DateTime UpdatedDateTime { get; private set; }
@@ -77,6 +81,30 @@ public sealed class User : AggregateRoot<UserId, int>
   public void RemoveRefreshToken(RefreshToken refreshToken)
   {
     _refreshTokens.Remove(refreshToken);
+    UpdatedDateTime = DateTime.UtcNow;
+  }
+
+  public void AddClaim(UserClaim claim)
+  {
+    _claims.Add(claim);
+    UpdatedDateTime = DateTime.UtcNow;
+  }
+
+  public void AddRole(UserRole role)
+  {
+    _roles.Add(role);
+    UpdatedDateTime = DateTime.UtcNow;
+  }
+
+  public void RemoveClaim(UserClaim claim)
+  {
+    _claims.Remove(claim);
+    UpdatedDateTime = DateTime.UtcNow;
+  }
+
+  public void RemoveRole(UserRole role)
+  {
+    _roles.Remove(role);
     UpdatedDateTime = DateTime.UtcNow;
   }
 

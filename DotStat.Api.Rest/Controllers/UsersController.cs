@@ -1,5 +1,14 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using DotStat.Api.Application.Auth.Commands.ChangePassword;
+using DotStat.Api.Application.Auth.Commands.LoginCommand;
+using DotStat.Api.Application.Auth.Commands.RefreshCommand;
+using DotStat.Api.Application.Auth.Commands.RegisterCommand;
+using DotStat.Api.Application.Auth.Commands.RevokeCommand;
+using DotStat.Api.Application.Auth.Queries.UserQuery;
 using DotStat.Api.Contracts.User;
+using DotStat.Api.Domain.Common.Errors;
+using DotStat.Api.Domain.UserAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +34,13 @@ public class UsersController : BaseController
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetUser(int id)
   {
-    throw new NotImplementedException();
+    var query = new UserQuery(UserId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<UserResponse>(res)),
+      Problem
+    );
   }
 
   /// <summary>
@@ -35,6 +50,119 @@ public class UsersController : BaseController
   [HttpGet("me")]
   public async Task<IActionResult> GetAuthUser()
   {
-    throw new NotImplementedException();
+    var idClaim = HttpContext.User.Claims.FirstOrDefault(c =>
+      c.Type == JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub]);
+
+    var notFoundProblem = new[] { Errors.User.UnknownUser }.ToList();
+    if (idClaim is null)
+      return Problem(notFoundProblem);
+
+    if (!int.TryParse(idClaim.Value, out int id))
+      return Problem(notFoundProblem);
+
+    var query = new UserQuery(UserId.Create(id));
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<UserResponse>(res)),
+      Problem
+    );
+  }
+
+  /// <summary>
+  /// Зарегистрировать пользователя
+  /// </summary>
+  [HttpPost("register")]
+  public async Task<IActionResult> Register(RegisterRequest request)
+  {
+    var command = _mapper.Map<RegisterCommand>(request);
+    var userResult = await _mediator.Send(command);
+
+    return userResult.Match(
+      result => base.Ok(_mapper.Map<UserResponse>(result)),
+      Problem
+    );
+  }
+
+  /// <summary>
+  /// Авторизовать пользователя
+  /// </summary>
+  [HttpPost("login")]
+  public async Task<IActionResult> Login(LoginRequest request)
+  {
+    var command = _mapper.Map<LoginCommand>(request);
+    var authResult = await _mediator.Send(command);
+
+    return authResult.Match(
+      result => Ok(_mapper.Map<AuthenticationResponse>(result)),
+      Problem
+    );
+  }
+
+  /// <summary>
+  /// Обновить JWT по Refresh Token
+  /// </summary>
+  [HttpPost("refresh")]
+  public async Task<IActionResult> Refresh(RefreshRequest request)
+  {
+    var command = _mapper.Map<RefreshCommand>(request);
+    var authResult = await _mediator.Send(command);
+
+    return authResult.Match(
+      result => Ok(_mapper.Map<RefreshResponse>(result)),
+      Problem
+    );
+  }
+
+  /// <summary>
+  /// Выход пользователя из системы
+  /// </summary>
+  [HttpPost("logout")]
+  public async Task<IActionResult> Logout(RefreshRequest request)
+  {
+    var idClaim = HttpContext.User.Claims.FirstOrDefault(c =>
+      c.Type == JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub]);
+
+    var notFoundProblem = new[] { Errors.User.UnknownUser }.ToList();
+    if (idClaim is null)
+      return Problem(notFoundProblem);
+
+    if (!int.TryParse(idClaim.Value, out int id))
+      return Problem(notFoundProblem);
+
+    var userId = UserId.Create(id);
+    var command = new RevokeCommand(userId, request.RefreshToken);
+    var result = await _mediator.Send(command);
+
+    return result.Match(
+      res => Ok(),
+      Problem
+    );
+  }
+
+  /// <summary>
+  /// Изменить пароль пользователя
+  /// </summary>
+  [HttpPut("password")]
+  public async Task<IActionResult> ChangePassword([FromBody] PasswordRequest request)
+  {
+    var idClaim = HttpContext.User.Claims.FirstOrDefault(c =>
+      c.Type == JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub]);
+
+    var notFoundProblem = new[] { Errors.User.UnknownUser }.ToList();
+    if (idClaim is null)
+      return Problem(notFoundProblem);
+
+    if (!int.TryParse(idClaim.Value, out int id))
+      return Problem(notFoundProblem);
+
+    var userId = UserId.Create(id);
+    var command = new ChangePasswordCommand(userId, request.Password);
+    var authResult = await _mediator.Send(command);
+
+    return authResult.Match(
+      result => Ok(_mapper.Map<AuthenticationResponse>(result)),
+      Problem
+    );
   }
 }

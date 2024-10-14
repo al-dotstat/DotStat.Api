@@ -11,6 +11,66 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
   {
     ConfigureUserTable(builder);
     ConfigureRefreshTokensTable(builder);
+    ConfigureUserRolesTable(builder);
+    ConfigureUserClaimsTable(builder);
+  }
+
+  private void ConfigureUserClaimsTable(EntityTypeBuilder<User> builder)
+  {
+    builder.OwnsMany(u => u.Claims, cb =>
+    {
+      cb.ToTable("user_claims");
+
+      cb.WithOwner().HasForeignKey("UserId");
+
+      cb.HasKey("Id", "UserId");
+
+      cb.Property(r => r.Id)
+        .HasColumnName("UserClaimId")
+        .ValueGeneratedNever()
+        .HasConversion(
+          id => id.Value,
+          value => UserClaimId.Create(value)
+        );
+
+      cb.Property(r => r.Type)
+        .IsRequired();
+
+      cb.Property(r => r.Value)
+        .IsRequired();
+    });
+
+    builder.Metadata.FindNavigation(nameof(User.Claims))!
+      .SetPropertyAccessMode(PropertyAccessMode.Field);
+  }
+
+  private void ConfigureUserRolesTable(EntityTypeBuilder<User> builder)
+  {
+    builder.OwnsMany(u => u.Roles, rb =>
+    {
+      rb.ToTable("user_roles");
+
+      rb.WithOwner().HasForeignKey("UserId");
+
+      rb.HasKey("Id", "UserId");
+
+      rb.Property(r => r.Id)
+        .HasColumnName("UserRoleId")
+        .ValueGeneratedNever()
+        .HasConversion(
+          id => id.Value,
+          value => UserRoleId.Create(value)
+        );
+
+      rb.Property(r => r.Name)
+        .IsRequired();
+
+      rb.Property(r => r.NormalizedName)
+        .IsRequired();
+    });
+
+    builder.Metadata.FindNavigation(nameof(User.Roles))!
+      .SetPropertyAccessMode(PropertyAccessMode.Field);
   }
 
   private void ConfigureRefreshTokensTable(EntityTypeBuilder<User> builder)
