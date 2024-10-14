@@ -1,5 +1,6 @@
 using DotStat.Api.Application.Developing.Results;
 using DotStat.Api.Contracts.Complex;
+using DotStat.Api.Domain.ComplexAggregate;
 using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using Mapster;
 
@@ -11,6 +12,8 @@ public class ComplexMappingConfig : IRegister
   {
     config.NewConfig<ComplexId, int>()
       .MapWith(src => src.Value);
+
+    config.NewConfig<Complex, ComplexResponse>();
 
     config.NewConfig<ComplexResult, ComplexResponse>()
       .Map(dest => dest, src => src.Complex);

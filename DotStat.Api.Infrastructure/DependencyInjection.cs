@@ -70,6 +70,7 @@ public static class DependencyInjection
     services.AddScoped<IBuildingRepository, BuildingRepository>();
     services.AddScoped<IDistrictRepository, DistrictRepository>();
     services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IOrderRepository, OrderRepository>();
 
     return services;
   }

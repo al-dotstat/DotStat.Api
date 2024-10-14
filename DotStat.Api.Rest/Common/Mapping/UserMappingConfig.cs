@@ -1,5 +1,6 @@
 using DotStat.Api.Application.Auth.Results;
 using DotStat.Api.Contracts.User;
+using DotStat.Api.Domain.UserAggregate;
 using DotStat.Api.Domain.UserAggregate.ValueObjects;
 using Mapster;
 
@@ -11,6 +12,8 @@ public class UserMappingConfig : IRegister
   {
     config.NewConfig<UserId, int>()
       .MapWith(src => src.Value);
+
+    config.NewConfig<User, UserResponse>();
 
     config.NewConfig<UserResult, UserResponse>()
       .Map(dest => dest, src => src.User);

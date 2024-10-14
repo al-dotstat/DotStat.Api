@@ -63,6 +63,9 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
       .HasConversion(id => id.Value, value => OrderId.Create(value))
       .ValueGeneratedOnAdd();
 
+    builder.Property(o => o.FileName)
+      .IsRequired();
+
     builder.Property(o => o.FileExpiredDateTime)
       .IsRequired();
 

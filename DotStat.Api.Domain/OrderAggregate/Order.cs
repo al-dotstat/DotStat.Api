@@ -9,6 +9,7 @@ public sealed class Order : AggregateRoot<OrderId, int>
   private List<OrderItem> _orderItems = [];
 
   public UserId UserId { get; private set; }
+  public string FileName { get; private set; }
   public DateTime FileExpiredDateTime { get; private set; }
 
   public IReadOnlyList<OrderItem> OrderItems => _orderItems.ToList().AsReadOnly();
@@ -18,25 +19,33 @@ public sealed class Order : AggregateRoot<OrderId, int>
 
   private Order(
     UserId userId,
+    string fileName,
     DateTime fileExpiredDateTime,
+    IEnumerable<OrderItem> items,
     DateTime updatedDateTime,
     DateTime createdDateTime
   )
   {
     UserId = userId;
+    FileName = fileName;
     FileExpiredDateTime = fileExpiredDateTime;
+    _orderItems = items.ToList();
     CreatedDateTime = createdDateTime;
     UpdatedDateTime = updatedDateTime;
   }
 
   public static Order Create(
     UserId userId,
-    DateTime fileExpiredDateTime
+    string fileName,
+    DateTime fileExpiredDateTime,
+    IEnumerable<OrderItem> items
   )
   {
     return new(
       userId,
+      fileName,
       fileExpiredDateTime,
+      items,
       DateTime.UtcNow,
       DateTime.UtcNow
     );

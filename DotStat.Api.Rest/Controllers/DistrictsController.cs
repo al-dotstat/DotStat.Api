@@ -1,6 +1,6 @@
 using System.Net;
 using DotStat.Api.Application.Developing.Queries.ComplexQueries;
-using DotStat.Api.Application.Developing.Queries.DistrictQueries;
+using DotStat.Api.Application.Infrastructure.Queries.DistrictQueries;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.District;
 using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
