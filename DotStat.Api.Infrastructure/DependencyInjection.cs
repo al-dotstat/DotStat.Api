@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace DotStat.Api.Infrastructure;
 
@@ -62,7 +63,11 @@ public static class DependencyInjection
             mySqlConfiguration.MajorVersion,
             mySqlConfiguration.MinorVersion,
             mySqlConfiguration.BuildVersion)),
-        o => o.MigrationsHistoryTable(tableName: "__DotStatApiMigrationHistory", schema: "dotstatapi")
+        o =>
+        {
+          o.MigrationsHistoryTable(tableName: "__DotStatApiMigrationHistory", schema: "dotstatapi");
+          o.SchemaBehavior(MySqlSchemaBehavior.Translate, (schema, entity) => $"{schema ?? "dbo"}_{entity}");
+        }
       )
     );
 

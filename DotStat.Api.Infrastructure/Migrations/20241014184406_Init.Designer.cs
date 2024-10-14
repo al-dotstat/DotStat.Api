@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotStat.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(DotStatApiDbContext))]
-    [Migration("20241014183641_Init")]
+    [Migration("20241014184406_Init")]
     partial class Init
     {
         /// <inheritdoc />
