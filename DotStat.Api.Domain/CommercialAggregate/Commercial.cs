@@ -27,7 +27,7 @@ public sealed class Commercial : AggregateRoot<CommercialId, int>
 
   private Commercial(
     string title,
-    CommercialDeclaration declaration,
+    CommercialDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,
@@ -52,7 +52,7 @@ public sealed class Commercial : AggregateRoot<CommercialId, int>
 
   public static Commercial Create(
     string title,
-    CommercialDeclaration declaration,
+    CommercialDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,
