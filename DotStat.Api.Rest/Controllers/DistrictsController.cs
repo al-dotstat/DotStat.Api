@@ -1,6 +1,7 @@
 using System.Net;
 using DotStat.Api.Application.Developing.Queries.ComplexQueries;
 using DotStat.Api.Application.Infrastructure.Queries.DistrictQueries;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.District;
 using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
@@ -42,7 +43,7 @@ public class DistrictsController : BaseController
   /// <summary>
   /// Получить все районы
   /// </summary>
-  [ProducesResponseType(typeof(DistrictResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<DistrictResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> GetAllDistricts()
@@ -51,7 +52,7 @@ public class DistrictsController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<DistrictResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<DistrictResponse>>(res)),
       Problem
     );
   }
@@ -60,7 +61,7 @@ public class DistrictsController : BaseController
   /// Получить все ЖК в районе
   /// </summary>
   /// <param name="id">Id района</param>
-  [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<ComplexResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDistrictComplexes(int id)
@@ -69,7 +70,7 @@ public class DistrictsController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<ComplexResponse>>(res)),
       Problem
     );
   }

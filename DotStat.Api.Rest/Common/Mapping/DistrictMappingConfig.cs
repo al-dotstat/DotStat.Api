@@ -1,4 +1,5 @@
 using DotStat.Api.Application.Infrastructure.Results;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.District;
 using DotStat.Api.Domain.DistrictAggregate;
 using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
@@ -18,7 +19,7 @@ public class DistrictMappingConfig : IRegister
     config.NewConfig<DistrictResult, DistrictResponse>()
       .Map(dest => dest, src => src.District);
 
-    config.NewConfig<DistrictsResult, DistrictResponse[]>()
-      .Map(dest => dest, src => src.Districts);
+    config.NewConfig<DistrictsResult, CollectionResponse<DistrictResponse>>()
+      .Map(dest => dest.Items, src => src.Districts);
   }
 }

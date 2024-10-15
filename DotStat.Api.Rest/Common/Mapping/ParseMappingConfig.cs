@@ -1,4 +1,5 @@
 using DotStat.Api.Application.Parsing.Results;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.Parse;
 using DotStat.Api.Domain.ParseAggregate.ValueObjects;
 using Mapster;
@@ -14,7 +15,7 @@ public class ParseMappingConfig : IRegister
 
     config.NewConfig<ParsingResult, ParseResponse>();
 
-    config.NewConfig<ParsingsResult, ParseResponse[]>()
-      .Map(dest => dest, src => src.Parsings);
+    config.NewConfig<ParsingsResult, CollectionResponse<ParseResponse>>()
+      .Map(dest => dest.Items, src => src.Parsings);
   }
 }

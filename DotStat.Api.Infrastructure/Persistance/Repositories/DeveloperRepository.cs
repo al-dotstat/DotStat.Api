@@ -46,7 +46,7 @@ public class DeveloperRepository(DotStatApiDbContext dbContext) : Repository<Dev
       .Select(d => d.DeveloperId);
 
     return [..
-      _dbContext.Developers.Where(d => developerIds.Contains(d.Id))
+      _dbContext.Developers.Where(d => developerIds.Any(did => did == d.Id))
     ];
   }
 
@@ -58,7 +58,7 @@ public class DeveloperRepository(DotStatApiDbContext dbContext) : Repository<Dev
       .Select(d => d.DeveloperId);
 
     return await _dbContext.Developers
-      .Where(d => developerIds.Contains(d.Id))
+      .Where(d => developerIds.Any(did => did == d.Id))
       .ToListAsync();
   }
 
@@ -66,7 +66,7 @@ public class DeveloperRepository(DotStatApiDbContext dbContext) : Repository<Dev
   {
     return [..
       _dbContext.Developers
-        .Where(d => d.NameRu.Contains(search, StringComparison.CurrentCultureIgnoreCase))
+        .Where(d => EF.Functions.Like(d.NameRu.ToLower(), $"%{search.ToLower()}%"))
         .Take(3)
     ];
   }
@@ -74,7 +74,7 @@ public class DeveloperRepository(DotStatApiDbContext dbContext) : Repository<Dev
   public async Task<ICollection<Developer>> SearchAsync(string search)
   {
     return await _dbContext.Developers
-      .Where(d => d.NameRu.Contains(search, StringComparison.CurrentCultureIgnoreCase))
+      .Where(d => EF.Functions.Like(d.NameRu.ToLower(), $"%{search.ToLower()}%"))
       .Take(3)
       .ToListAsync();
   }

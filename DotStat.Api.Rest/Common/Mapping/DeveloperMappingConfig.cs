@@ -1,4 +1,5 @@
 using DotStat.Api.Application.Developing.Results;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.Developer;
 using DotStat.Api.Domain.DeveloperAggregate;
 using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
@@ -18,7 +19,7 @@ public class DeveloperMappingConfig : IRegister
     config.NewConfig<DeveloperResult, DeveloperResponse>()
       .Map(dest => dest, src => src.Developer);
 
-    config.NewConfig<DevelopersResult, DeveloperResponse[]>()
-      .Map(dest => dest, src => src.Developers);
+    config.NewConfig<DevelopersResult, CollectionResponse<DeveloperResponse>>()
+      .Map(dest => dest.Items, src => src.Developers);
   }
 }

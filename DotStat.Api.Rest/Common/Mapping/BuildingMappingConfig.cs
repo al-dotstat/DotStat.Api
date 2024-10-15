@@ -1,5 +1,6 @@
 using DotStat.Api.Application.Developing.Results;
 using DotStat.Api.Contracts.Building;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Domain.BuildingAggregate;
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
 using Mapster;
@@ -18,7 +19,7 @@ public class BuildingMappingConfig : IRegister
     config.NewConfig<BuildingResult, BuildingResponse>()
       .Map(dest => dest, src => src.Building);
 
-    config.NewConfig<BuildingsResult, BuildingResponse[]>()
-      .Map(dest => dest, src => src.Buildings);
+    config.NewConfig<BuildingsResult, CollectionResponse<BuildingResponse>>()
+      .Map(dest => dest.Items, src => src.Buildings);
   }
 }

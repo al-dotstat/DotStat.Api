@@ -1,6 +1,7 @@
 using System.Net;
 using DotStat.Api.Application.Developing.Queries.ComplexQueries;
 using DotStat.Api.Application.Developing.Queries.DeveloperQueries;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.Developer;
 using DotStat.Api.Domain.DeveloperAggregate.ValueObjects;
@@ -42,7 +43,7 @@ public class DevelopersController : BaseController
   /// <summary>
   /// Получить всех застройщиков
   /// </summary>
-  [ProducesResponseType(typeof(DeveloperResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<DeveloperResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> GetAllDevelopers()
@@ -51,7 +52,7 @@ public class DevelopersController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<DeveloperResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<DeveloperResponse>>(res)),
       Problem
     );
   }
@@ -60,7 +61,7 @@ public class DevelopersController : BaseController
   /// Получить все ЖК застройщика
   /// </summary>
   /// <param name="id">Id застройщика</param>
-  [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<ComplexResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("{id:int}/complexes")]
   public async Task<IActionResult> GetDeveloperComplexes(int id)
@@ -69,7 +70,7 @@ public class DevelopersController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<ComplexResponse>>(res)),
       Problem
     );
   }

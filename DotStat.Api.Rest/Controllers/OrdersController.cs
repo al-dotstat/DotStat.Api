@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using DotStat.Api.Application.Parsing.Commands.OrderCommands;
 using DotStat.Api.Application.Parsing.Queries.OrderQueries;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.Order;
 using DotStat.Api.Domain.Common.Errors;
 using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
@@ -45,7 +46,7 @@ public class OrdersController : BaseController
   /// <summary>
   /// Получить историю заказов авторизованного пользователя
   /// </summary>
-  [ProducesResponseType(typeof(OrderResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<OrderResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("history")]
   public async Task<IActionResult> GetOrdersHistory()
@@ -64,7 +65,7 @@ public class OrdersController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<OrderResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<OrderResponse>>(res)),
       Problem
     );
   }
@@ -101,7 +102,7 @@ public class OrdersController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<OrderResponse[]>(res)),
+      res => Ok(_mapper.Map<OrderResponse>(res)),
       Problem
     );
   }

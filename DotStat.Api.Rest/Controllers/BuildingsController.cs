@@ -32,7 +32,7 @@ public class BuildingsController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<BuildingResponse[]>(res)),
+      res => Ok(_mapper.Map<BuildingResponse>(res)),
       Problem
     );
   }

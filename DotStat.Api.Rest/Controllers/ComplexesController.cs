@@ -5,6 +5,7 @@ using DotStat.Api.Application.Developing.Queries.DeveloperQueries;
 using DotStat.Api.Application.Developing.Queries.SearchQueries;
 using DotStat.Api.Application.Parsing.Queries.ParsedQueries;
 using DotStat.Api.Contracts.Building;
+using DotStat.Api.Contracts.Common;
 using DotStat.Api.Contracts.Complex;
 using DotStat.Api.Contracts.Developer;
 using DotStat.Api.Contracts.Parse;
@@ -49,7 +50,7 @@ public class ComplexesController : BaseController
   /// <summary>
   /// Получить все ЖК
   /// </summary>
-  [ProducesResponseType(typeof(ComplexResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<ComplexResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> GetAllComplexes()
@@ -58,7 +59,7 @@ public class ComplexesController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<ComplexResponse>>(res)),
       Problem
     );
   }
@@ -69,7 +70,7 @@ public class ComplexesController : BaseController
   /// <param name="developersIds">Id застройщиков</param>
   /// <param name="districtsIds">Id районов</param>
   /// <param name="search">Строка поиска по названию</param>
-  [ProducesResponseType(typeof(BuildingResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<BuildingResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("search")]
   public async Task<IActionResult> SearchComplexes([FromQuery] int[]? developersIds, [FromQuery] int[]? districtsIds, [FromQuery] string? search)
@@ -85,7 +86,7 @@ public class ComplexesController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<ComplexResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<ComplexResponse>>(res)),
       Problem
     );
   }
@@ -94,7 +95,7 @@ public class ComplexesController : BaseController
   /// Получить все здания в ЖК
   /// </summary>
   /// <param name="id">Id ЖК</param>
-  [ProducesResponseType(typeof(BuildingResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<BuildingResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("{id:int}/buildings")]
   public async Task<IActionResult> GetComplexBuildings(int id)
@@ -103,7 +104,7 @@ public class ComplexesController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<BuildingResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<BuildingResponse>>(res)),
       Problem
     );
   }
@@ -112,7 +113,7 @@ public class ComplexesController : BaseController
   /// Получить всех застройщиков ЖК
   /// </summary>
   /// <param name="id">Id ЖК</param>
-  [ProducesResponseType(typeof(DeveloperResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<DeveloperResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("{id:int}/developers")]
   public async Task<IActionResult> GetComplexDevelopers(int id)
@@ -121,7 +122,7 @@ public class ComplexesController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<DeveloperResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<DeveloperResponse>>(res)),
       Problem
     );
   }
@@ -130,7 +131,7 @@ public class ComplexesController : BaseController
   /// Получить информацию о датах парсинга и типах объектов в них
   /// </summary>
   /// <param name="id">Id ЖК</param>
-  [ProducesResponseType(typeof(ParseResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<ParseResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("{id:int}/parsed")]
   public async Task<IActionResult> GetComplexParsedInfo(int id)
@@ -139,7 +140,7 @@ public class ComplexesController : BaseController
     var result = await _mediator.Send(query);
 
     return result.Match(
-      res => Ok(_mapper.Map<ParseResponse[]>(res)),
+      res => Ok(_mapper.Map<CollectionResponse<ParseResponse>>(res)),
       Problem
     );
   }

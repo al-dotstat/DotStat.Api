@@ -73,7 +73,7 @@ public class ComplexRepository(DotStatApiDbContext dbContext) : Repository<Compl
   {
     return [..
       _dbContext.Complexes
-        .Where(c => c.NameRu.Contains(search, StringComparison.CurrentCultureIgnoreCase))
+        .Where(c => EF.Functions.Like(c.NameRu.ToLower(), $"%{search.ToLower()}%"))
         .Take(3)
     ];
   }
@@ -81,7 +81,7 @@ public class ComplexRepository(DotStatApiDbContext dbContext) : Repository<Compl
   public async Task<ICollection<Complex>> SearchAsync(string search)
   {
     return await _dbContext.Complexes
-      .Where(c => c.NameRu.Contains(search, StringComparison.CurrentCultureIgnoreCase))
+      .Where(c => EF.Functions.Like(c.NameRu.ToLower(), $"%{search.ToLower()}%"))
       .Take(3)
       .ToListAsync();
   }
@@ -91,13 +91,13 @@ public class ComplexRepository(DotStatApiDbContext dbContext) : Repository<Compl
     var searchQuery = (IQueryable<Complex>)_dbContext.Complexes;
 
     if (string.IsNullOrEmpty(name))
-      searchQuery = searchQuery.Where(c => c.NameRu.Contains(name, StringComparison.CurrentCultureIgnoreCase));
+      searchQuery = searchQuery.Where(c => EF.Functions.Like(c.NameRu.ToLower(), $"%{name.ToLower()}%"));
 
     if (developerIds.Any())
-      searchQuery = searchQuery.Where(c => c.Developers.Any(cd => developerIds.Contains(cd.DeveloperId)));
+      searchQuery = searchQuery.Where(c => c.Developers.Any(cd => developerIds.Any(did => did == cd.DeveloperId)));
 
     if (districtIds.Any())
-      searchQuery = searchQuery.Where(c => districtIds.Contains(c.DistrictId));
+      searchQuery = searchQuery.Where(c => districtIds.Any(did => did == c.DistrictId));
 
     return [.. searchQuery];
   }
@@ -106,14 +106,14 @@ public class ComplexRepository(DotStatApiDbContext dbContext) : Repository<Compl
   {
     var searchQuery = (IQueryable<Complex>)_dbContext.Complexes;
 
-    if (string.IsNullOrEmpty(name))
-      searchQuery = searchQuery.Where(c => c.NameRu.Contains(name, StringComparison.CurrentCultureIgnoreCase));
+    if (!string.IsNullOrEmpty(name))
+      searchQuery = searchQuery.Where(c => EF.Functions.Like(c.NameRu.ToLower(), $"%{name.ToLower()}%"));
 
     if (developerIds.Any())
-      searchQuery = searchQuery.Where(c => c.Developers.Any(cd => developerIds.Contains(cd.DeveloperId)));
+      searchQuery = searchQuery.Where(c => c.Developers.Any(cd => developerIds.Any(did => did == cd.DeveloperId)));
 
     if (districtIds.Any())
-      searchQuery = searchQuery.Where(c => districtIds.Contains(c.DistrictId));
+      searchQuery = searchQuery.Where(c => districtIds.Any(did => did == c.DistrictId));
 
     return await searchQuery.ToListAsync();
   }
