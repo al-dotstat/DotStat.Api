@@ -46,8 +46,7 @@ public class ParseConfiguration : IEntityTypeConfiguration<Parse>
       .IsRequired();
 
     builder.Property(c => c.ComplexId)
-        .HasConversion(id => id.Value, value => ComplexId.Create(value))
-        .ValueGeneratedNever();
+        .HasConversion(id => id.Value, value => ComplexId.Create(value));
 
     builder.HasOne<Complex>()
       .WithMany()

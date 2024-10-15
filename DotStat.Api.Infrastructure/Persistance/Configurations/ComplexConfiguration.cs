@@ -27,8 +27,7 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
       d.HasKey("Id", "ComplexId");
 
       d.Property(d => d.DeveloperId)
-        .HasConversion(id => id.Value, value => DeveloperId.Create(value))
-        .ValueGeneratedNever();
+        .HasConversion(id => id.Value, value => DeveloperId.Create(value));
 
       d.HasOne<Developer>()
         .WithMany()
@@ -60,8 +59,7 @@ public class ComplexConfiguration : IEntityTypeConfiguration<Complex>
       .IsRequired();
 
     builder.Property(c => c.DistrictId)
-        .HasConversion(id => id.Value, value => DistrictId.Create(value))
-        .ValueGeneratedNever();
+        .HasConversion(id => id.Value, value => DistrictId.Create(value));
 
     builder.HasOne<District>()
       .WithMany()

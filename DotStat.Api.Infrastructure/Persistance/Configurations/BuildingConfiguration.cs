@@ -34,8 +34,7 @@ public class BuildingConfiguration : IEntityTypeConfiguration<Building>
       .IsRequired();
 
     builder.Property(b => b.ComplexId)
-      .HasConversion(id => id.Value, value => ComplexId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => ComplexId.Create(value));
 
     builder.HasOne<Complex>()
       .WithMany()

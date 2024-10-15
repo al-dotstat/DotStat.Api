@@ -32,7 +32,7 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
 
       db.Property(d => d.Id)
         .HasColumnName("DeclarationId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => ParkingDeclarationId.Create(value)
@@ -76,7 +76,7 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
 
       pb.Property(pi => pi.Id)
         .HasColumnName("ParkingParsingInfoId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => ParkingParsingInfoId.Create(value)
@@ -95,8 +95,7 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
         .IsRequired();
 
       pb.Property(pi => pi.ParseId)
-        .HasConversion(id => id.Value, value => ParseId.Create(value))
-        .ValueGeneratedNever();
+        .HasConversion(id => id.Value, value => ParseId.Create(value));
 
       pb.HasOne<Parse>()
         .WithMany()
@@ -124,12 +123,10 @@ public class ParkingConfiguration : IEntityTypeConfiguration<Parking>
       .IsRequired();
 
     builder.Property(p => p.BuildingId)
-      .HasConversion(id => id.Value, value => BuildingId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => BuildingId.Create(value));
 
     builder.Property(p => p.DeveloperId)
-      .HasConversion(id => id.Value, value => DeveloperId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => DeveloperId.Create(value));
 
     builder.HasOne<Building>()
       .WithMany()

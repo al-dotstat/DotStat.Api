@@ -32,7 +32,7 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
 
       db.Property(d => d.Id)
         .HasColumnName("DeclarationId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => CommercialDeclarationId.Create(value)
@@ -76,7 +76,7 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
 
       pb.Property(pi => pi.Id)
         .HasColumnName("CommercialParsingInfoId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => CommercialParsingInfoId.Create(value)
@@ -95,8 +95,7 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
         .IsRequired();
 
       pb.Property(pi => pi.ParseId)
-      .HasConversion(id => id.Value, value => ParseId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => ParseId.Create(value));
 
       pb.HasOne<Parse>()
         .WithMany()
@@ -124,12 +123,10 @@ public class CommercialConfiguration : IEntityTypeConfiguration<Commercial>
       .IsRequired();
 
     builder.Property(c => c.BuildingId)
-      .HasConversion(id => id.Value, value => BuildingId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => BuildingId.Create(value));
 
     builder.Property(c => c.DeveloperId)
-      .HasConversion(id => id.Value, value => DeveloperId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => DeveloperId.Create(value));
 
     builder.HasOne<Building>()
       .WithMany()

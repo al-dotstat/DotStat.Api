@@ -32,7 +32,7 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
 
       db.Property(d => d.Id)
         .HasColumnName("DeclarationId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => FlatDeclarationId.Create(value)
@@ -85,7 +85,7 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
 
       fb.Property(pi => pi.Id)
         .HasColumnName("FlatParsingInfoId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => FlatParsingInfoId.Create(value)
@@ -104,8 +104,7 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
         .IsRequired();
 
       fb.Property(pi => pi.ParseId)
-        .HasConversion(id => id.Value, value => ParseId.Create(value))
-        .ValueGeneratedNever();
+        .HasConversion(id => id.Value, value => ParseId.Create(value));
 
       fb.HasOne<Parse>()
         .WithMany()
@@ -133,12 +132,10 @@ public class FlatConfiguration : IEntityTypeConfiguration<Flat>
       .IsRequired();
 
     builder.Property(f => f.BuildingId)
-      .HasConversion(id => id.Value, value => BuildingId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => BuildingId.Create(value));
 
     builder.Property(f => f.DeveloperId)
-      .HasConversion(id => id.Value, value => DeveloperId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => DeveloperId.Create(value));
 
     builder.HasOne<Building>()
       .WithMany()

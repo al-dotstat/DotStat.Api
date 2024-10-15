@@ -4,6 +4,7 @@ using DotStat.Api.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotStat.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(DotStatApiDbContext))]
-    partial class DotStatApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241015104037_IdsGenerateFix")]
+    partial class IdsGenerateFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

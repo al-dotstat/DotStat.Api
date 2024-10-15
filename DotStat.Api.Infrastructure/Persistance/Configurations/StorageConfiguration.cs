@@ -32,7 +32,7 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
 
       db.Property(d => d.Id)
         .HasColumnName("DeclarationId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => StorageDeclarationId.Create(value)
@@ -76,7 +76,7 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
 
       pb.Property(pi => pi.Id)
         .HasColumnName("StorageParsingInfoId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => StorageParsingInfoId.Create(value)
@@ -95,8 +95,7 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
         .IsRequired();
 
       pb.Property(f => f.ParseId)
-        .HasConversion(id => id.Value, value => ParseId.Create(value))
-        .ValueGeneratedNever();
+        .HasConversion(id => id.Value, value => ParseId.Create(value));
 
       pb.HasOne<Parse>()
         .WithMany()
@@ -124,12 +123,10 @@ public class StorageConfiguration : IEntityTypeConfiguration<Storage>
       .IsRequired();
 
     builder.Property(s => s.BuildingId)
-      .HasConversion(id => id.Value, value => BuildingId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => BuildingId.Create(value));
 
     builder.Property(s => s.DeveloperId)
-      .HasConversion(id => id.Value, value => DeveloperId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => DeveloperId.Create(value));
 
     builder.HasOne<Building>()
       .WithMany()

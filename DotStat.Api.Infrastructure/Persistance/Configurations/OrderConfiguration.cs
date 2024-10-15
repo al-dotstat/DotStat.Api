@@ -41,7 +41,6 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         .IsRequired();
 
       ob.Property(i => i.ComplexId)
-        .ValueGeneratedNever()
         .HasConversion(
           id => id.Value,
           value => ComplexId.Create(value)
@@ -76,8 +75,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
       .IsRequired();
 
     builder.Property(o => o.UserId)
-      .HasConversion(id => id.Value, value => UserId.Create(value))
-      .ValueGeneratedNever();
+      .HasConversion(id => id.Value, value => UserId.Create(value));
 
     builder.HasOne<User>()
       .WithMany()

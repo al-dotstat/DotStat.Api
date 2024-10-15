@@ -27,7 +27,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
       cb.Property(r => r.Id)
         .HasColumnName("UserClaimId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => UserClaimId.Create(value)
@@ -56,7 +56,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
       rb.Property(r => r.Id)
         .HasColumnName("UserRoleId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => UserRoleId.Create(value)
@@ -85,7 +85,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
       sb.Property(rt => rt.Id)
         .HasColumnName("RefreshTokenId")
-        .ValueGeneratedNever()
+        .ValueGeneratedOnAdd()
         .HasConversion(
           id => id.Value,
           value => RefreshTokenId.Create(value)
