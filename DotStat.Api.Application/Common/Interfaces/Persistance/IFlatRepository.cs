@@ -1,4 +1,5 @@
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
+using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.FlatAggregate;
 using DotStat.Api.Domain.FlatAggregate.ValueObjects;
 
@@ -10,6 +11,8 @@ public interface IFlatRepository : IRepository<Flat>
   Task<Flat?> GetByIdAsync(FlatId id);
   ICollection<Flat> GetBuildingFlats(BuildingId buildingId);
   Task<ICollection<Flat>> GetBuildingFlatsAsync(BuildingId buildingId);
+  ICollection<Flat> GetComplexFlats(ComplexId complexId);
+  Task<ICollection<Flat>> GetComplexFlatsAsync(ComplexId complexId);
   bool Exist(FlatId id);
   Task<bool> ExistAsync(FlatId id);
 }

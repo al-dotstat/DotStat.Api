@@ -1,4 +1,5 @@
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
+using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.ParkingAggregate;
 using DotStat.Api.Domain.ParkingAggregate.ValueObjects;
 
@@ -10,6 +11,8 @@ public interface IParkingRepository : IRepository<Parking>
   Task<Parking?> GetByIdAsync(ParkingId id);
   ICollection<Parking> GetBuildingParkings(BuildingId buildingId);
   Task<ICollection<Parking>> GetBuildingParkingsAsync(BuildingId buildingId);
+  ICollection<Parking> GetComplexParkings(ComplexId complexId);
+  Task<ICollection<Parking>> GetComplexParkingsAsync(ComplexId complexId);
   bool Exist(ParkingId id);
   Task<bool> ExistAsync(ParkingId id);
 }

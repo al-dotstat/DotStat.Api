@@ -1,6 +1,7 @@
 using DotStat.Api.Application;
 using DotStat.Api.Infrastructure;
 using DotStat.Api.Rest;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,11 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles(new StaticFileOptions
+{
+  FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "StaticFiles")),
+  RequestPath = "/StaticFiles"
+});
 
 app.MapSwagger();
 app.MapHealthChecks("/healthz");

@@ -1,5 +1,6 @@
 using DotStat.Api.Application.Common.Interfaces.Persistance;
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
+using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.ParkingAggregate;
 using DotStat.Api.Domain.ParkingAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -36,5 +37,28 @@ public class ParkingRepository(DotStatApiDbContext dbContext) : Repository<Parki
   public async Task<ICollection<Parking>> GetBuildingParkingsAsync(BuildingId buildingId)
   {
     return await _dbContext.Parkings.Where(p => p.BuildingId == buildingId).ToListAsync();
+  }
+
+  public ICollection<Parking> GetComplexParkings(ComplexId complexId)
+  {
+    var complexBuildingIds = _dbContext.Buildings
+      .Where(b => b.ComplexId == complexId)
+      .Select(b => b.Id);
+
+    return [..
+      _dbContext.Parkings
+        .Where(f => complexBuildingIds.Any(bid => bid == f.BuildingId))
+    ];
+  }
+
+  public async Task<ICollection<Parking>> GetComplexParkingsAsync(ComplexId complexId)
+  {
+    var complexBuildingIds = _dbContext.Buildings
+      .Where(b => b.ComplexId == complexId)
+      .Select(b => b.Id);
+
+    return await _dbContext.Parkings
+      .Where(f => complexBuildingIds.Any(bid => bid == f.BuildingId))
+      .ToListAsync();
   }
 }

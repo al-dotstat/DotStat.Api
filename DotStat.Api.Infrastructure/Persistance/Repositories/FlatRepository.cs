@@ -1,5 +1,6 @@
 using DotStat.Api.Application.Common.Interfaces.Persistance;
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
+using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.FlatAggregate;
 using DotStat.Api.Domain.FlatAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -36,5 +37,28 @@ public class FlatRepository(DotStatApiDbContext dbContext) : Repository<Flat>(db
   public async Task<ICollection<Flat>> GetBuildingFlatsAsync(BuildingId buildingId)
   {
     return await _dbContext.Flats.Where(f => f.BuildingId == buildingId).ToListAsync();
+  }
+
+  public ICollection<Flat> GetComplexFlats(ComplexId complexId)
+  {
+    var complexBuildingIds = _dbContext.Buildings
+      .Where(b => b.ComplexId == complexId)
+      .Select(b => b.Id);
+
+    return [..
+      _dbContext.Flats
+        .Where(f => complexBuildingIds.Any(bid => bid == f.BuildingId))
+    ];
+  }
+
+  public async Task<ICollection<Flat>> GetComplexFlatsAsync(ComplexId complexId)
+  {
+    var complexBuildingIds = _dbContext.Buildings
+      .Where(b => b.ComplexId == complexId)
+      .Select(b => b.Id);
+
+    return await _dbContext.Flats
+      .Where(f => complexBuildingIds.Any(bid => bid == f.BuildingId))
+      .ToListAsync();
   }
 }

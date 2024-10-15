@@ -1,5 +1,6 @@
 using DotStat.Api.Application.Common.Interfaces.Persistance;
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
+using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.StorageAggregate;
 using DotStat.Api.Domain.StorageAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -36,5 +37,28 @@ public class StorageRepository(DotStatApiDbContext dbContext) : Repository<Stora
   public async Task<ICollection<Storage>> GetBuildingStoragesAsync(BuildingId buildingId)
   {
     return await _dbContext.Storages.Where(s => s.BuildingId == buildingId).ToListAsync();
+  }
+
+  public ICollection<Storage> GetComplexStorages(ComplexId complexId)
+  {
+    var complexBuildingIds = _dbContext.Buildings
+      .Where(b => b.ComplexId == complexId)
+      .Select(b => b.Id);
+
+    return [..
+      _dbContext.Storages
+        .Where(f => complexBuildingIds.Any(bid => bid == f.BuildingId))
+    ];
+  }
+
+  public async Task<ICollection<Storage>> GetComplexStoragesAsync(ComplexId complexId)
+  {
+    var complexBuildingIds = _dbContext.Buildings
+      .Where(b => b.ComplexId == complexId)
+      .Select(b => b.Id);
+
+    return await _dbContext.Storages
+      .Where(f => complexBuildingIds.Any(bid => bid == f.BuildingId))
+      .ToListAsync();
   }
 }

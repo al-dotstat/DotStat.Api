@@ -71,6 +71,7 @@ public static class DependencyInjection
       )
     );
 
+    services.AddSingleton<ILocalStorageService, LocalStorageService>();
     services.AddScoped<PublishDomainEventsInterceptor>();
     services.AddScoped<IDeveloperRepository, DeveloperRepository>();
     services.AddScoped<IComplexRepository, ComplexRepository>();
