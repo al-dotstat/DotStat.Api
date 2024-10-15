@@ -27,7 +27,7 @@ public sealed class Parking : AggregateRoot<ParkingId, int>
 
   private Parking(
     string title,
-    ParkingDeclaration declaration,
+    ParkingDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,
@@ -52,7 +52,7 @@ public sealed class Parking : AggregateRoot<ParkingId, int>
 
   public static Parking Create(
     string title,
-    ParkingDeclaration declaration,
+    ParkingDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,

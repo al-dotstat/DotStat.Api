@@ -28,7 +28,7 @@ public sealed class Flat : AggregateRoot<FlatId, int>
 
   private Flat(
     string title,
-    FlatDeclaration declaration,
+    FlatDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,
@@ -55,7 +55,7 @@ public sealed class Flat : AggregateRoot<FlatId, int>
 
   public static Flat Create(
     string title,
-    FlatDeclaration declaration,
+    FlatDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,

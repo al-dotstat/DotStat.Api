@@ -27,7 +27,7 @@ public sealed class Storage : AggregateRoot<StorageId, int>
 
   private Storage(
     string title,
-    StorageDeclaration declaration,
+    StorageDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,
@@ -52,7 +52,7 @@ public sealed class Storage : AggregateRoot<StorageId, int>
 
   public static Storage Create(
     string title,
-    StorageDeclaration declaration,
+    StorageDeclaration? declaration,
     BuildingId buildingId,
     DeveloperId developerId,
     string? layout,
