@@ -3,10 +3,12 @@ using DotStat.Api.Application.Developing.Queries.SearchQueries;
 using DotStat.Api.Contracts.Common;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotStat.Api.Rest.Controllers;
 
+[Authorize]
 public class SearchController : BaseController
 {
   private readonly ISender _mediator;

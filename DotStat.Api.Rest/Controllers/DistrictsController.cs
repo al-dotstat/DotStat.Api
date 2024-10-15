@@ -7,10 +7,12 @@ using DotStat.Api.Contracts.District;
 using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotStat.Api.Rest.Controllers;
 
+[Authorize]
 public class DistrictsController : BaseController
 {
   private readonly ISender _mediator;

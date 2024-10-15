@@ -11,6 +11,7 @@ using DotStat.Api.Domain.Common.Errors;
 using DotStat.Api.Domain.UserAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotStat.Api.Rest.Controllers;
@@ -32,6 +33,7 @@ public class UsersController : BaseController
   /// <param name="id">Id пользователя</param>
   [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
+  [Authorize]
   [HttpGet("{id:int}")]
   public async Task<IActionResult> GetUser(int id)
   {
@@ -49,6 +51,7 @@ public class UsersController : BaseController
   /// </summary>
   [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
+  [Authorize]
   [HttpGet("me")]
   public async Task<IActionResult> GetAuthUser()
   {
@@ -127,6 +130,7 @@ public class UsersController : BaseController
   /// </summary>
   [ProducesResponseType((int)HttpStatusCode.OK)]
   [Produces("application/json")]
+  [Authorize]
   [HttpPost("logout")]
   public async Task<IActionResult> Logout([FromBody] RefreshRequest request)
   {
@@ -155,6 +159,7 @@ public class UsersController : BaseController
   /// </summary>
   [ProducesResponseType(typeof(AuthenticationResponse), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
+  [Authorize]
   [HttpPut("password")]
   public async Task<IActionResult> ChangePassword([FromBody] PasswordRequest request)
   {

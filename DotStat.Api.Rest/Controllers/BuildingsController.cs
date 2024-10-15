@@ -4,10 +4,12 @@ using DotStat.Api.Contracts.Building;
 using DotStat.Api.Domain.BuildingAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotStat.Api.Rest.Controllers;
 
+[Authorize]
 public class BuildingsController : BaseController
 {
   private readonly ISender _mediator;

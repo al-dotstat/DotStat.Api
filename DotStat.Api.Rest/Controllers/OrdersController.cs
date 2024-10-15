@@ -10,10 +10,12 @@ using DotStat.Api.Domain.OrderAggregate.ValueObjects;
 using DotStat.Api.Domain.UserAggregate.ValueObjects;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotStat.Api.Rest.Controllers;
 
+[Authorize]
 public class OrdersController : BaseController
 {
   private readonly ISender _mediator;

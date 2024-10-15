@@ -1,10 +1,12 @@
 using DotStat.Api.Application.Fake;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotStat.Api.Rest.Controllers;
 
+[Authorize]
 public class FakeController : BaseController
 {
   private readonly ISender _mediator;
