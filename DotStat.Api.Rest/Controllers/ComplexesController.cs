@@ -75,7 +75,10 @@ public class ComplexesController : BaseController
   [ProducesResponseType(typeof(CollectionResponse<ComplexResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("search")]
-  public async Task<IActionResult> SearchComplexes([FromQuery] int[]? developersIds, [FromQuery] int[]? districtsIds, [FromQuery] string? search)
+  public async Task<IActionResult> SearchComplexes(
+    [FromQuery(Name = "developersIds[]")] int[]? developersIds,
+    [FromQuery(Name = "districtsIds[]")] int[]? districtsIds,
+    [FromQuery] string? search)
   {
     var developersIdsCasted = (developersIds ?? []).Select(x => DeveloperId.Create(x));
     var districtsIdsCasted = (districtsIds ?? []).Select(x => DistrictId.Create(x));
