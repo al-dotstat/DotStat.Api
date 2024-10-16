@@ -24,7 +24,7 @@ public class SearchController : BaseController
   /// Поиск ЖК и застройщиков
   /// </summary>
   /// <param name="search">Строка поиска</param>
-  [ProducesResponseType(typeof(SearchResponse[]), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(SearchResponse), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet]
   public async Task<IActionResult> SearchComplexesAndDevelopers([FromQuery] string search)

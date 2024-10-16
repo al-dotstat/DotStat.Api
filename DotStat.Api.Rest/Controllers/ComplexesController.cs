@@ -72,7 +72,7 @@ public class ComplexesController : BaseController
   /// <param name="developersIds">Id застройщиков</param>
   /// <param name="districtsIds">Id районов</param>
   /// <param name="search">Строка поиска по названию</param>
-  [ProducesResponseType(typeof(CollectionResponse<BuildingResponse>), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(CollectionResponse<ComplexResponse>), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("search")]
   public async Task<IActionResult> SearchComplexes([FromQuery] int[]? developersIds, [FromQuery] int[]? districtsIds, [FromQuery] string? search)
