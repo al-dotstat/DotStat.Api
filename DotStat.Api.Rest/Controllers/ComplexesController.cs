@@ -16,6 +16,7 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace DotStat.Api.Rest.Controllers;
 
@@ -45,6 +46,42 @@ public class ComplexesController : BaseController
 
     return result.Match(
       res => Ok(_mapper.Map<ComplexResponse>(res)),
+      Problem
+    );
+  }
+
+  /// <summary>
+  /// Скачать парсинг ЖК
+  /// </summary>
+  /// <param name="id">Id ЖК</param>
+  /// <param name="includeFlats">Включить квартиры в файл</param>
+  /// <param name="includeParkings">Включить паркинг в файл</param>
+  /// <param name="includeStorages">Включить кладовые в файл</param>
+  /// <param name="includeCommercials">Включить коммерцию в файл</param>
+  [ProducesResponseType(typeof(ComplexResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
+  [HttpGet("{id:int}/parse")]
+  public async Task<IActionResult> GetComplexParse(
+    int id,
+    [FromQuery] bool includeFlats,
+    [FromQuery] bool includeParkings,
+    [FromQuery] bool includeStorages,
+    [FromQuery] bool includeCommercials)
+  {
+    var query = new ComplexExportQuery(
+      ComplexId.Create(id),
+      includeFlats,
+      includeParkings,
+      includeStorages,
+      includeCommercials);
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res =>
+      {
+        new FileExtensionContentTypeProvider().TryGetContentType(res.FileName, out string? contentType);
+        return File(res.Body, contentType ?? "");
+      },
       Problem
     );
   }

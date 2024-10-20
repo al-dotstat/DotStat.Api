@@ -16,7 +16,8 @@ public class OrderMappingConfig : IRegister
 
     config.NewConfig<OrderItem, OrderItemResponse>();
 
-    config.NewConfig<Order, OrderResponse>();
+    config.NewConfig<Order, OrderResponse>()
+      .Map(dest => dest.Items, src => src.OrderItems);
 
     config.NewConfig<OrderResult, OrderResponse>()
       .Map(dest => dest, src => src.Order);
