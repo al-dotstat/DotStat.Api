@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace DotStat.Api.Application.Parsing.Commands.OrderCommands;
+namespace DotStat.Api.Application.Parsing.Queries.ParsedQueries;
 
-public class CreateOrderItemValidator : AbstractValidator<CreateOrderItem>
+public class ComplexExportQueryValidator : AbstractValidator<ComplexExportQuery>
 {
-  public CreateOrderItemValidator()
+  public ComplexExportQueryValidator()
   {
     RuleFor(x => x)
       .Must(x => x.IncludeCommercials || x.IncludeFlats || x.IncludeParkings || x.IncludeCommercials || x.IncludeStorages)

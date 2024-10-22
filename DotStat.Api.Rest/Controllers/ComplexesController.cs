@@ -80,7 +80,7 @@ public class ComplexesController : BaseController
       res =>
       {
         new FileExtensionContentTypeProvider().TryGetContentType(res.FileName, out string? contentType);
-        return File(res.Body, contentType ?? "");
+        return File(res.Body, contentType ?? "", res.FileName);
       },
       Problem
     );

@@ -27,10 +27,9 @@ public class ComplexExportQueryHandler(
     var storages = request.IncludeStorages ? await storageRepository.GetComplexStoragesAsync(request.ComplexId) : [];
     var commercials = request.IncludeCommercials ? await commercialRepository.GetComplexCommercialsAsync(request.ComplexId) : [];
 
-    var complexName = complex.NameRu;
-    var fileName = complexName + ".xlsx";
+    var fileName = complex.Name + ".xlsx";
     var file = exporter.Export(
-      complexName,
+      complex.NameRu,
       flats,
       storages,
       parkings,
