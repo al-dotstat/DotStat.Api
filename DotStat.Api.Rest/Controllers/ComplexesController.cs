@@ -87,6 +87,38 @@ public class ComplexesController : BaseController
   }
 
   /// <summary>
+  /// Получить таблицу парсинга ЖК
+  /// </summary>
+  /// <param name="id">Id ЖК</param>
+  /// <param name="includeFlats">Включить квартиры</param>
+  /// <param name="includeParkings">Включить паркинг</param>
+  /// <param name="includeStorages">Включить кладовые</param>
+  /// <param name="includeCommercials">Включить коммерцию</param>
+  [ProducesResponseType(typeof(ComplexTableResponse), (int)HttpStatusCode.OK)]
+  [Produces("application/json")]
+  [HttpGet("{id:int}/parse/table")]
+  public async Task<IActionResult> GetComplexParseTable(
+    int id,
+    [FromQuery] bool includeFlats,
+    [FromQuery] bool includeParkings,
+    [FromQuery] bool includeStorages,
+    [FromQuery] bool includeCommercials)
+  {
+    var query = new ComplexTableQuery(
+      ComplexId.Create(id),
+      includeFlats,
+      includeParkings,
+      includeStorages,
+      includeCommercials);
+    var result = await _mediator.Send(query);
+
+    return result.Match(
+      res => Ok(_mapper.Map<ComplexTableResponse>(res)),
+      Problem
+    );
+  }
+
+  /// <summary>
   /// Получить все ЖК
   /// </summary>
   [ProducesResponseType(typeof(CollectionResponse<ComplexResponse>), (int)HttpStatusCode.OK)]

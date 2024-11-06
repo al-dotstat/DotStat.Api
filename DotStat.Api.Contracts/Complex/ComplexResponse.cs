@@ -4,7 +4,7 @@ public record ComplexResponse(
   int Id,
   string Name,
   string NameRu,
-  string? description,
+  string? Description,
   string? Address,
   string? Latitude,
   string? Longitude,
