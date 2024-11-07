@@ -1,4 +1,5 @@
 using DotStat.Api.Application.Common.Interfaces.Persistance;
+using DotStat.Api.Application.Common.Utils;
 using DotStat.Api.Application.Parsing.Export;
 using DotStat.Api.Application.Parsing.Results;
 using DotStat.Api.Domain.Common.Errors;
@@ -22,16 +23,16 @@ public class ComplexTableQueryHandler(
       return Errors.Complex.UnknownComplex;
 
     var flats = request.IncludeFlats ? await flatRepository.GetComplexFlatsAsync(request.ComplexId) : [];
-    var flatsTable = request.IncludeFlats ? TableConverter.FlatsToArray(flats, complex.NameRu) : null;
+    var flatsTable = request.IncludeFlats ? TableConverter.FlatsToArray(flats, complex.NameRu).ToArrays() : null;
 
     var parkings = request.IncludeParkings ? await parkingRepository.GetComplexParkingsAsync(request.ComplexId) : [];
-    var parkingsTable = request.IncludeParkings ? TableConverter.ParkingsToArray(parkings, complex.NameRu) : null;
+    var parkingsTable = request.IncludeParkings ? TableConverter.ParkingsToArray(parkings, complex.NameRu).ToArrays() : null;
 
     var storages = request.IncludeStorages ? await storageRepository.GetComplexStoragesAsync(request.ComplexId) : [];
-    var storagesTable = request.IncludeStorages ? TableConverter.StoragesToArray(storages, complex.NameRu) : null;
+    var storagesTable = request.IncludeStorages ? TableConverter.StoragesToArray(storages, complex.NameRu).ToArrays() : null;
 
     var commercials = request.IncludeCommercials ? await commercialRepository.GetComplexCommercialsAsync(request.ComplexId) : [];
-    var commercialsTable = request.IncludeCommercials ? TableConverter.CommercialsToArray(commercials, complex.NameRu) : null;
+    var commercialsTable = request.IncludeCommercials ? TableConverter.CommercialsToArray(commercials, complex.NameRu).ToArrays() : null;
 
     return new TableResult(flatsTable, parkingsTable, storagesTable, commercialsTable);
   }

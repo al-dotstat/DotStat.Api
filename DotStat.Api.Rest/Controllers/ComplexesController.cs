@@ -58,7 +58,7 @@ public class ComplexesController : BaseController
   /// <param name="includeParkings">Включить паркинг в файл</param>
   /// <param name="includeStorages">Включить кладовые в файл</param>
   /// <param name="includeCommercials">Включить коммерцию в файл</param>
-  [ProducesResponseType(typeof(ComplexResponse), (int)HttpStatusCode.OK)]
+  [ProducesResponseType(typeof(File), (int)HttpStatusCode.OK)]
   [Produces("application/json")]
   [HttpGet("{id:int}/parse")]
   public async Task<IActionResult> GetComplexParse(

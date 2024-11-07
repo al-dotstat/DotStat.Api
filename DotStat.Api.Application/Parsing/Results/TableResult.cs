@@ -1,8 +1,12 @@
 namespace DotStat.Api.Application.Parsing.Results;
 
 public record TableResult(
-  string[,]? Flats,
-  string[,]? Parkings,
-  string[,]? Storages,
-  string[,]? Commercials
+  string[][]? Flats,
+  string[][]? Parkings,
+  string[][]? Storages,
+  string[][]? Commercials
+);
+
+public record TableItem(
+  string[] Cells
 );
