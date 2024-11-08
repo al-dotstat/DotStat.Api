@@ -9,6 +9,7 @@ public record ComplexResponse(
   string? Latitude,
   string? Longitude,
   double? Area,
+  string? ImageFilePath,
   DateTime? CompletionDate,
   int DistrictId,
   ComplexDeveloperResponse[] Developers,

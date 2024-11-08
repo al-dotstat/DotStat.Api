@@ -1,7 +1,6 @@
 using DotStat.Api.Domain.Common.Models;
 using DotStat.Api.Domain.ComplexAggregate.ValueObjects;
 using DotStat.Api.Domain.DistrictAggregate.ValueObjects;
-using DotStat.Api.Domain.ParseAggregate.ValueObjects;
 
 namespace DotStat.Api.Domain.ComplexAggregate;
 
@@ -16,6 +15,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
   public string? Latitude { get; private set; }
   public string? Longitude { get; private set; }
   public double? Area { get; private set; }
+  public string? ImageFilePath { get; private set; }
   public DateTime? CompletionDate { get; private set; }
   public DistrictId DistrictId { get; private set; }
 
@@ -32,6 +32,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     string? latitude,
     string? longitude,
     double? area,
+    string? imageFilePath,
     DateTime? completionDate,
     DistrictId districtId,
     DateTime createdDateTime,
@@ -45,6 +46,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     Latitude = latitude;
     Longitude = longitude;
     Area = area;
+    ImageFilePath = imageFilePath;
     CompletionDate = completionDate;
     DistrictId = districtId;
     CreatedDateTime = createdDateTime;
@@ -59,6 +61,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
     string? latitude,
     string? longitude,
     double? area,
+    string? imageFilePath,
     DateTime? completionDate,
     DistrictId districtId
   )
@@ -71,6 +74,7 @@ public sealed class Complex : AggregateRoot<ComplexId, int>
       latitude,
       longitude,
       area,
+      imageFilePath,
       completionDate,
       districtId,
       DateTime.UtcNow,
