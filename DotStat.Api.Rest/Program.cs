@@ -14,6 +14,8 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.PrepareInfrastructure();
+
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();

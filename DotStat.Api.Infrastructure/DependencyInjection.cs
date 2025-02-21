@@ -6,6 +6,7 @@ using DotStat.Api.Infrastructure.Configuration;
 using DotStat.Api.Infrastructure.Persistance;
 using DotStat.Api.Infrastructure.Persistance.Interceptors;
 using DotStat.Api.Infrastructure.Persistance.Repositories;
+using DotStat.Api.Infrastructure.Common.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Builder;
 
 namespace DotStat.Api.Infrastructure;
 
@@ -40,8 +42,8 @@ public static class DependencyInjection
     services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
       .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
       {
-        ValidateIssuer = true,
-        ValidateAudience = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings.Issuer,
@@ -86,5 +88,12 @@ public static class DependencyInjection
     services.AddScoped<ICommercialRepository, CommercialRepository>();
 
     return services;
+  }
+
+  public static IApplicationBuilder PrepareInfrastructure(this IApplicationBuilder app)
+  {
+    PrepareDB.Prepare(app);
+
+    return app;
   }
 }
